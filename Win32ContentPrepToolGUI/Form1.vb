@@ -28,9 +28,28 @@ Public Class Form1
 
     End Sub
     Private Sub btnStartPackaging_Click(sender As Object, e As EventArgs) Handles btnStartPackaging.Click
-        'Dim cmd
-        'cmd = CreateObject("wscript.shell")
-        'cmd.run("echo", "Hello world!")
+
+        Dim properties As New ProcessStartInfo
+
+        Dim param_setupFolder As String = "-c"
+        Dim param_setupFile As String = "-s"
+        Dim param_outputFolder As String = "-o"
+        Dim param_catalogFolder As String = "-a"
+        Dim param_quietMode As String = "-q"
+        Dim sp As String = " "
+
+        Dim args As String = ""
+
+        args = param_setupFolder + sp + sourceFolder + sp + param_setupFile + sp + installerPath + sp + param_outputFolder + sp + outputFolder + param_quietMode
+
+        debugMessages("Debug args: ", lblDebug_args, args)
+
+        txtArguments.Text = args
+
+        properties.FileName = prepToolExe
+        properties.Arguments = args
+        properties.WindowStyle = ProcessWindowStyle.Normal
+
     End Sub
     Private Sub btnSelectInstallerFolder_Click(sender As Object, e As EventArgs) Handles btnSelectInstallerFolder.Click
 
