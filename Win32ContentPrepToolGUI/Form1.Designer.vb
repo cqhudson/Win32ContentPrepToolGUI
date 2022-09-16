@@ -47,6 +47,8 @@ Partial Class Form1
         Me.lblDebug_installerFolder = New System.Windows.Forms.Label()
         Me.lblDebug_outputFolder = New System.Windows.Forms.Label()
         Me.lblDebug_catalogChoice = New System.Windows.Forms.Label()
+        Me.lblDebug_args = New System.Windows.Forms.Label()
+        Me.txtArguments = New System.Windows.Forms.TextBox()
         Me.grpCatalogFolder.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -252,11 +254,29 @@ Partial Class Form1
         Me.lblDebug_catalogChoice.TabIndex = 18
         Me.lblDebug_catalogChoice.Text = "Debug catalog choice: "
         '
+        'lblDebug_args
+        '
+        Me.lblDebug_args.AutoSize = True
+        Me.lblDebug_args.Location = New System.Drawing.Point(808, 528)
+        Me.lblDebug_args.Name = "lblDebug_args"
+        Me.lblDebug_args.Size = New System.Drawing.Size(165, 25)
+        Me.lblDebug_args.TabIndex = 19
+        Me.lblDebug_args.Text = "Debug arguments: "
+        '
+        'txtArguments
+        '
+        Me.txtArguments.Location = New System.Drawing.Point(802, 583)
+        Me.txtArguments.Name = "txtArguments"
+        Me.txtArguments.Size = New System.Drawing.Size(280, 31)
+        Me.txtArguments.TabIndex = 20
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1159, 633)
+        Me.Controls.Add(Me.txtArguments)
+        Me.Controls.Add(Me.lblDebug_args)
         Me.Controls.Add(Me.lblDebug_catalogChoice)
         Me.Controls.Add(Me.lblDebug_outputFolder)
         Me.Controls.Add(Me.lblDebug_installerFolder)
@@ -310,4 +330,6 @@ Partial Class Form1
     Friend WithEvents lblDebug_installerFolder As Label
     Friend WithEvents lblDebug_outputFolder As Label
     Friend WithEvents lblDebug_catalogChoice As Label
+    Friend WithEvents lblDebug_args As Label
+    Friend WithEvents txtArguments As TextBox
 End Class

@@ -7,6 +7,21 @@
 Imports System.Diagnostics.Eventing.Reader
 Imports System.IO
 
+
+
+'
+' TODO:
+'
+'   Implement a fix for installerPath to include quotes around the filename if it includes spaces
+'
+'   The installerPath MUST have quotes around the installer file if the file has spaces in the name
+'
+'   For example, if the installer is named "installme-now.msi", then there is no issue.
+'   But if the file is named "Install me now.msi" with spaces between the words, the file MUST be quote wrapped
+'   otherwise IntuneWinAppUtil.exe will complain about not being able to access the setup file.
+'
+
+
 Public Class Form1
 
     Dim rootOfDrive As String = System.Environment.GetEnvironmentVariable("HOMEDRIVE")
@@ -51,6 +66,7 @@ Public Class Form1
         properties.WindowStyle = ProcessWindowStyle.Normal
 
     End Sub
+
     Private Sub btnSelectInstallerFolder_Click(sender As Object, e As EventArgs) Handles btnSelectInstallerFolder.Click
 
         SelectFolder(fbdiagSelectSourceFolder, txtPathOfInstallerFolder)
