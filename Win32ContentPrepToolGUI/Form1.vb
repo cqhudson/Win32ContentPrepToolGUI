@@ -8,6 +8,13 @@ Imports System.IO
 
 Public Class Form1
 
+    Dim rootOfDrive As String = System.Environment.GetEnvironmentVariable("HOMEDRIVE")
+    Dim installerPath As String = ""
+    Dim sourceFolder As String = ""
+    Dim outputFolder As String = ""
+    Dim prepToolExe As String = ""
+
+
 #Region " Buttons "
 
     Private Sub btnSelectInstaller_Click(sender As Object, e As EventArgs) Handles btnSelectInstaller.Click
@@ -15,7 +22,7 @@ Public Class Form1
         Dim ofd As OpenFileDialog = opnfilediagSelectInstaller
 
         ofd.Title = "Select Installer File (.exe or .msi)"
-        ofd.InitialDirectory = GlobalVars.rootOfDrive
+        ofd.InitialDirectory = rootOfDrive
         ofd.ShowDialog()
 
     End Sub
@@ -27,15 +34,15 @@ Public Class Form1
     Private Sub btnSelectInstallerFolder_Click(sender As Object, e As EventArgs) Handles btnSelectInstallerFolder.Click
 
         SelectFolder(fbdiagSelectSourceFolder, txtPathOfInstallerFolder)
-        GlobalVars.sourceFolder = txtPathOfInstallerFolder.Text
-        debugMessages("Debug installerFolder: ", lblDebug_installerFolder, GlobalVars.sourceFolder)
+        sourceFolder = txtPathOfInstallerFolder.Text
+        debugMessages("Debug installerFolder: ", lblDebug_installerFolder, sourceFolder)
 
     End Sub
     Private Sub btnSelectOutputFolder_Click(sender As Object, e As EventArgs) Handles btnSelectOutputFolder.Click
 
         SelectFolder(fbdiagSelectOutputFolder, txtOutputFolderPath)
-        GlobalVars.outputFolder = txtOutputFolderPath.Text
-        debugMessages("Debug outputFolder: ", lblDebug_outputFolder, GlobalVars.outputFolder)
+        outputFolder = txtOutputFolderPath.Text
+        debugMessages("Debug outputFolder: ", lblDebug_outputFolder, outputFolder)
 
     End Sub
     Private Sub btnSelectPrepToolExe_Click(sender As Object, e As EventArgs) Handles btnSelectPrepToolExe.Click
@@ -43,7 +50,7 @@ Public Class Form1
         Dim ofd As OpenFileDialog = opnfilediagSelectPrepToolExe
 
         ofd.Title = "Select IntuneWinAppUtil.exe"
-        ofd.InitialDirectory = GlobalVars.rootOfDrive
+        ofd.InitialDirectory = rootOfDrive
         ofd.ShowDialog()
 
     End Sub
@@ -55,32 +62,19 @@ Public Class Form1
     Private Sub opnfilediagSelectInstaller_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectInstaller.FileOk
 
         SelectFile(opnfilediagSelectInstaller, txtPathOfInstaller)
-        GlobalVars.installerPath = txtPathOfInstaller.Text
-        debugMessages("Debug installerPath: ", lblDebug_installerPath, GlobalVars.installerPath)
+        installerPath = txtPathOfInstaller.Text
+        debugMessages("Debug installerPath: ", lblDebug_installerPath, installerPath)
 
     End Sub
     Private Sub opnfilediagSelectPrepToolExe_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectPrepToolExe.FileOk
 
         SelectFile(opnfilediagSelectPrepToolExe, txtPathOfPrepToolExe)
-        GlobalVars.prepToolExe = txtPathOfPrepToolExe.Text
-        debugMessages("Debug prepToolExe: ", lblDebug_prepToolExe, GlobalVars.prepToolExe)
+        prepToolExe = txtPathOfPrepToolExe.Text
+        debugMessages("Debug prepToolExe: ", lblDebug_prepToolExe, prepToolExe)
 
     End Sub
 
 #End Region
-
-
-    Private Class GlobalVars
-
-        Public Shared rootOfDrive As String = System.Environment.GetEnvironmentVariable("HOMEDRIVE")
-        Public Shared installerPath As String = ""
-        Public Shared sourceFolder As String = ""
-        Public Shared outputFolder As String = ""
-        Public Shared prepToolExe As String = ""
-
-    End Class
-
-
 
     Sub SelectFolder(fbdiag As FolderBrowserDialog, txtbox As TextBox)
 
@@ -103,5 +97,13 @@ Public Class Form1
         debugLabel.Text = debugMsg + debugValue
     End Sub
 
+    Private Function GetGroupBoxCheckedRadioButton(grp As GroupBox) As RadioButton
+        For Each btn As RadioButton In grp.Controls
+            If btn.Checked Then Return btn
+        Next
+    End Function
 
+    Private Sub radNo_CheckedChanged(sender As Object, e As EventArgs) Handles radNo.CheckedChanged
+        GetGroupBoxCheckedRadioButton(grpCatalogFolder)
+    End Sub
 End Class
