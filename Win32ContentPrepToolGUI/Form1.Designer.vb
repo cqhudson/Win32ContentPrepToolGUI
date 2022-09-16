@@ -49,6 +49,7 @@ Partial Class Form1
         Me.lblDebug_catalogChoice = New System.Windows.Forms.Label()
         Me.lblDebug_args = New System.Windows.Forms.Label()
         Me.txtArguments = New System.Windows.Forms.TextBox()
+        Me.lblDebug_installerFileName = New System.Windows.Forms.Label()
         Me.grpCatalogFolder.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -270,11 +271,21 @@ Partial Class Form1
         Me.txtArguments.Size = New System.Drawing.Size(280, 31)
         Me.txtArguments.TabIndex = 20
         '
+        'lblDebug_installerFileName
+        '
+        Me.lblDebug_installerFileName.AutoSize = True
+        Me.lblDebug_installerFileName.Location = New System.Drawing.Point(106, 545)
+        Me.lblDebug_installerFileName.Name = "lblDebug_installerFileName"
+        Me.lblDebug_installerFileName.Size = New System.Drawing.Size(148, 25)
+        Me.lblDebug_installerFileName.TabIndex = 21
+        Me.lblDebug_installerFileName.Text = "Installer name is: "
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1159, 633)
+        Me.ClientSize = New System.Drawing.Size(1159, 652)
+        Me.Controls.Add(Me.lblDebug_installerFileName)
         Me.Controls.Add(Me.txtArguments)
         Me.Controls.Add(Me.lblDebug_args)
         Me.Controls.Add(Me.lblDebug_catalogChoice)
@@ -332,4 +343,5 @@ Partial Class Form1
     Friend WithEvents lblDebug_catalogChoice As Label
     Friend WithEvents lblDebug_args As Label
     Friend WithEvents txtArguments As TextBox
+    Friend WithEvents lblDebug_installerFileName As Label
 End Class
