@@ -16,7 +16,6 @@ Public Class Form1
     Dim prepToolExe As String = ""
     Dim catalogChoice As Boolean = False
 
-
 #Region " Buttons "
 
     Private Sub btnSelectInstaller_Click(sender As Object, e As EventArgs) Handles btnSelectInstaller.Click
@@ -78,6 +77,7 @@ Public Class Form1
 
 #End Region
 
+#Region " Sub Procedures and Functions "
     Sub SelectFolder(fbdiag As FolderBrowserDialog, txtbox As TextBox)
 
         If (fbdiag.ShowDialog() = DialogResult.OK) Then
@@ -98,6 +98,7 @@ Public Class Form1
     Sub debugMessages(debugMsg As String, debugLabel As Label, Optional debugValue As String = "")
         debugLabel.Text = debugMsg + debugValue
     End Sub
+#End Region
 
 #Region " Catalog Choice Group Box "
     Private Sub GetGroupBoxCheckedRadioButton(grpBox As GroupBox)
