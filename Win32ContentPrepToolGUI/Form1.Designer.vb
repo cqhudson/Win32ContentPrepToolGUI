@@ -46,6 +46,7 @@ Partial Class Form1
         Me.lblDebug_installerPath = New System.Windows.Forms.Label()
         Me.lblDebug_installerFolder = New System.Windows.Forms.Label()
         Me.lblDebug_outputFolder = New System.Windows.Forms.Label()
+        Me.lblDebug_catalogChoice = New System.Windows.Forms.Label()
         Me.grpCatalogFolder.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -169,7 +170,6 @@ Partial Class Form1
         'radYes
         '
         Me.radYes.AutoSize = True
-        Me.radYes.Enabled = False
         Me.radYes.Location = New System.Drawing.Point(50, 39)
         Me.radYes.Name = "radYes"
         Me.radYes.Size = New System.Drawing.Size(62, 29)
@@ -243,11 +243,21 @@ Partial Class Form1
         Me.lblDebug_outputFolder.TabIndex = 17
         Me.lblDebug_outputFolder.Text = "Debug outputFolder : "
         '
+        'lblDebug_catalogChoice
+        '
+        Me.lblDebug_catalogChoice.AutoSize = True
+        Me.lblDebug_catalogChoice.Location = New System.Drawing.Point(814, 418)
+        Me.lblDebug_catalogChoice.Name = "lblDebug_catalogChoice"
+        Me.lblDebug_catalogChoice.Size = New System.Drawing.Size(193, 25)
+        Me.lblDebug_catalogChoice.TabIndex = 18
+        Me.lblDebug_catalogChoice.Text = "Debug catalog choice: "
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1159, 633)
+        Me.Controls.Add(Me.lblDebug_catalogChoice)
         Me.Controls.Add(Me.lblDebug_outputFolder)
         Me.Controls.Add(Me.lblDebug_installerFolder)
         Me.Controls.Add(Me.lblDebug_installerPath)
@@ -299,4 +309,5 @@ Partial Class Form1
     Friend WithEvents lblDebug_installerPath As Label
     Friend WithEvents lblDebug_installerFolder As Label
     Friend WithEvents lblDebug_outputFolder As Label
+    Friend WithEvents lblDebug_catalogChoice As Label
 End Class

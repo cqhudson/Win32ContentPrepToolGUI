@@ -4,6 +4,7 @@
 ' Date: 15-Sept-2022
 '
 
+Imports System.Diagnostics.Eventing.Reader
 Imports System.IO
 
 Public Class Form1
@@ -13,6 +14,7 @@ Public Class Form1
     Dim sourceFolder As String = ""
     Dim outputFolder As String = ""
     Dim prepToolExe As String = ""
+    Dim catalogChoice As Boolean = False
 
 
 #Region " Buttons "
@@ -93,17 +95,32 @@ Public Class Form1
     End Sub
 
 
-    Sub debugMessages(debugMsg As String, debugLabel As Label, debugValue As String)
+    Sub debugMessages(debugMsg As String, debugLabel As Label, Optional debugValue As String = "")
         debugLabel.Text = debugMsg + debugValue
     End Sub
 
-    Private Function GetGroupBoxCheckedRadioButton(grp As GroupBox) As RadioButton
-        For Each btn As RadioButton In grp.Controls
-            If btn.Checked Then Return btn
-        Next
-    End Function
+#Region " Catalog Choice Group Box "
+    Private Sub GetGroupBoxCheckedRadioButton(grpBox As GroupBox)
+
+        Dim rbtn As RadioButton = grpBox.Controls.OfType(Of RadioButton).Where(Function(r) r.Checked = True).FirstOrDefault()
+
+        If rbtn.Name = "radNo" Then
+            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "No")
+        Else
+            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "Yes")
+        End If
+
+    End Sub
+
+    Private Sub radYes_CheckedChanged(sender As Object, e As EventArgs) Handles radYes.CheckedChanged
+        GetGroupBoxCheckedRadioButton(grpCatalogFolder)
+    End Sub
 
     Private Sub radNo_CheckedChanged(sender As Object, e As EventArgs) Handles radNo.CheckedChanged
         GetGroupBoxCheckedRadioButton(grpCatalogFolder)
     End Sub
+
+#End Region
+
+
 End Class
