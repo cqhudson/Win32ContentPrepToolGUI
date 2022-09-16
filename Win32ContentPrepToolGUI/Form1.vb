@@ -25,10 +25,11 @@ Imports System.IO
 Public Class Form1
 
     Dim rootOfDrive As String = System.Environment.GetEnvironmentVariable("HOMEDRIVE")
-    Dim installerPath As String = ""
-    Dim sourceFolder As String = ""
-    Dim outputFolder As String = ""
-    Dim prepToolExe As String = ""
+    Dim installerPath As String
+    Dim sourceFolder As String
+    Dim outputFolder As String
+    Dim prepToolExe As String
+    Dim installerFileName As String
     Dim catalogChoice As Boolean = False
 
 #Region " Buttons "
@@ -97,9 +98,37 @@ Public Class Form1
 
     Private Sub opnfilediagSelectInstaller_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectInstaller.FileOk
 
+        Dim sb As New StringBuilder()
+
+        Dim reversedFilePath As String
+
+        Dim index As Integer
+
         SelectFile(opnfilediagSelectInstaller, txtPathOfInstaller)
         installerPath = txtPathOfInstaller.Text
+        reversedFilePath = StrReverse(installerPath)
+
         debugMessages("Debug installerPath: ", lblDebug_installerPath, installerPath)
+
+
+        ' This loop is so we can capture the filename of the executable we want to pack.
+        ' Unfortunately, if there are spaces in the filename, IntuneWinAppUtil.exe throws
+        ' some errors unless it is wrapped in quotes.
+
+        For Each c As Char In reversedFilePath
+            index += 1
+            If c = "\" Then
+                installerFileName = reversedFilePath.Substring(0, index - 1)
+                installerFileName = StrReverse(installerFileName)
+
+                installerFileName = sb.Append(Chr(34)).Append(installerFileName).Append(Chr(34)).ToString() ' Add double quotation marks to the beginning and ending of filename
+
+                debugMessages("Installer filename is: ", lblDebug_installerFileName, installerFileName)
+                Exit For
+            End If
+        Next
+
+
 
     End Sub
     Private Sub opnfilediagSelectPrepToolExe_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectPrepToolExe.FileOk
