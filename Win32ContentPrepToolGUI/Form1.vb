@@ -21,6 +21,7 @@ Imports System.IO
 '   otherwise IntuneWinAppUtil.exe will complain about not being able to access the setup file.
 '
 
+Imports System.Text
 
 Public Class Form1
 
@@ -54,9 +55,16 @@ Public Class Form1
         Dim param_quietMode As String = "-q"
         Dim sp As String = " "
 
-        Dim args As String = ""
+        Dim sb As New StringBuilder()
+        Dim args As String
 
-        args = param_setupFolder + sp + sourceFolder + sp + param_setupFile + sp + installerPath + sp + param_outputFolder + sp + outputFolder + param_quietMode
+
+        sb.Append(param_setupFolder).Append(sp).Append(sourceFolder)
+        sb.Append(sp).Append(param_setupFile).Append(sp).Append(sourceFolder).Append("\").Append(installerFileName)
+        sb.Append(sp).Append(param_outputFolder).Append(sp).Append(outputFolder)
+        sb.Append(sp).Append(param_quietMode).ToString()
+
+        args = sb.ToString()
 
         debugMessages("Debug args: ", lblDebug_args, args)
 
