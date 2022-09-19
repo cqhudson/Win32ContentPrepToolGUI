@@ -1,5 +1,5 @@
 ﻿'
-' Author: xcqhj
+' Author: Connor Hudson
 '
 ' Date: 15-Sept-2022
 '
@@ -27,13 +27,14 @@ Imports System.Text
 
 Public Class Form1
 
-    Dim rootOfDrive As String = System.Environment.GetEnvironmentVariable("HOMEDRIVE")
-    Dim installerPath As String
-    Dim sourceFolder As String
-    Dim outputFolder As String
-    Dim prepToolExe As String
-    Dim installerFileName As String
-    'Dim catalogChoice As Boolean = False
+    Dim HomeDrive As String = Environment.GetEnvironmentVariable("HOMEDRIVE")
+    Dim SetupFile As String
+    Dim SetupFolder As String
+    Dim OutputFolder As String
+    Dim PrepToolExe As String
+    Dim SetupFileName As String
+    Dim CatalogFolder As String
+    Dim CatalogChoice As Boolean = False
 
 #Region " Buttons "
 
@@ -42,7 +43,7 @@ Public Class Form1
         Dim ofd As OpenFileDialog = opnfilediagSelectInstaller
 
         ofd.Title = "Select Installer File (.exe or .msi)"
-        ofd.InitialDirectory = rootOfDrive
+        ofd.InitialDirectory = HomeDrive
         ofd.ShowDialog()
 
     End Sub
@@ -50,48 +51,44 @@ Public Class Form1
 
         Dim properties As New ProcessStartInfo
 
-        Dim param_setupFolder As String = "-c"
-        Dim param_setupFile As String = "-s"
-        Dim param_outputFolder As String = "-o"
-        'Dim param_catalogFolder As String = "-a" ' This will be used in the future
-        Dim param_quietMode As String = "-q"
-        Dim sp As String = " "
-        Dim powershell As String = "powershell.exe"
+        Dim Param_SetupFolder As String = "-c"
+        Dim Param_SetupFile As String = "-s"
+        Dim Param_OutputFolder As String = "-o"
+        Dim Param_CatalogFolder As String = "-a"
+        Dim Param_QuietMode As String = "-q"
+        Dim Space As String = " "
+        Dim PowerShell As String = "powershell.exe"
 
         Dim sb As New StringBuilder()
         Dim sb2 As New StringBuilder()
-        Dim args As String
+        Dim Args As String
 
-        Dim fixedInstaller As String
-        fixedInstaller = sb2.Append(Chr(34)).Append(sourceFolder).Append("\").Append(installerFileName).Append(Chr(34)).ToString()
+        Dim PatchedSetupFilePath As String ' Use this to wrap the setup_file path in double quotations for PowerShell
+        PatchedSetupFilePath = sb2.Append(Chr(34)).Append(SetupFolder).Append("\").Append(SetupFileName).Append(Chr(34)).ToString()
 
-        sb.Append(prepToolExe).Append(sp)
-        sb.Append(param_setupFolder).Append(sp).Append(sourceFolder)
-        sb.Append(sp).Append(param_setupFile).Append(sp).Append(fixedInstaller) '.Append(installerFileName_ForPowershell)
-        sb.Append(sp).Append(param_outputFolder).Append(sp).Append(outputFolder)
-        sb.Append(sp).Append(param_quietMode).ToString()
+        sb.Append(PrepToolExe).Append(Space)
+        sb.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
+        sb.Append(Space).Append(Param_SetupFile).Append(Space).Append(PatchedSetupFilePath)
+        sb.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
+        sb.Append(Space).Append(Param_QuietMode).ToString()
 
-        args = sb.ToString()
-        txtArguments.Text = args
+        Args = sb.ToString()
+        txtArguments.Text = Args
 
-        debugMessages("Debug args: ", lblDebug_args, args)
-
-        StartContentPrep(prepToolExe, args)
+        StartContentPrep(PowerShell, Args)
 
     End Sub
 
     Private Sub btnSelectInstallerFolder_Click(sender As Object, e As EventArgs) Handles btnSelectInstallerFolder.Click
 
         SelectFolder(fbdiagSelectSourceFolder, txtPathOfInstallerFolder)
-        sourceFolder = txtPathOfInstallerFolder.Text
-        debugMessages("Debug installerFolder: ", lblDebug_installerFolder, sourceFolder)
+        SetupFolder = txtPathOfInstallerFolder.Text
 
     End Sub
     Private Sub btnSelectOutputFolder_Click(sender As Object, e As EventArgs) Handles btnSelectOutputFolder.Click
 
         SelectFolder(fbdiagSelectOutputFolder, txtOutputFolderPath)
-        outputFolder = txtOutputFolderPath.Text
-        debugMessages("Debug outputFolder: ", lblDebug_outputFolder, outputFolder)
+        OutputFolder = txtOutputFolderPath.Text
 
     End Sub
     Private Sub btnSelectPrepToolExe_Click(sender As Object, e As EventArgs) Handles btnSelectPrepToolExe.Click
@@ -99,7 +96,7 @@ Public Class Form1
         Dim ofd As OpenFileDialog = opnfilediagSelectPrepToolExe
 
         ofd.Title = "Select IntuneWinAppUtil.exe"
-        ofd.InitialDirectory = rootOfDrive
+        ofd.InitialDirectory = HomeDrive
         ofd.ShowDialog()
 
     End Sub
@@ -111,31 +108,28 @@ Public Class Form1
     Private Sub opnfilediagSelectInstaller_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectInstaller.FileOk
 
         Dim sb As New StringBuilder()
-        Dim reversedFilePath As String
-        Dim index As Integer
-        Dim singleQuote As Integer = 39
+        Dim ReversedFilePath As String
+        Dim Index As Integer
+        Dim SingleQuote As Integer = 39
 
         SelectFile(opnfilediagSelectInstaller, txtPathOfInstaller)
-        installerPath = txtPathOfInstaller.Text
+        SetupFile = txtPathOfInstaller.Text
 
-        reversedFilePath = StrReverse(installerPath)
-
-        debugMessages("Debug installerPath: ", lblDebug_installerPath, installerPath)
-
+        ReversedFilePath = StrReverse(SetupFile)
 
         ' This loop is so we can capture the filename of the executable we want to pack.
         ' Unfortunately, if there are spaces in the filename, IntuneWinAppUtil.exe throws
         ' some errors unless it is wrapped in quotes.
 
-        For Each c As Char In reversedFilePath
-            index += 1
-            If c = "\" Then
-                installerFileName = reversedFilePath.Substring(0, index - 1)
-                installerFileName = StrReverse(installerFileName)
+        For Each character As Char In ReversedFilePath
+            Index += 1
+            If character = "\" Then
+                SetupFileName = ReversedFilePath.Substring(0, Index - 1)
+                SetupFileName = StrReverse(SetupFileName)
 
-                installerFileName = sb.Append(Chr(singleQuote)).Append(installerFileName).Append(Chr(singleQuote)).ToString() ' Add double quotation marks to the beginning and ending of filename
+                SetupFileName = sb.Append(Chr(SingleQuote)).Append(SetupFileName).Append(Chr(SingleQuote)).ToString() ' Add double quotation marks to the beginning and ending of filename
 
-                debugMessages("Installer filename is: ", lblDebug_installerFileName, installerFileName)
+                debugMessages("Installer filename is: ", lblDebug_installerFileName, SetupFileName)
                 Exit For
             End If
         Next
@@ -144,8 +138,8 @@ Public Class Form1
     Private Sub opnfilediagSelectPrepToolExe_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectPrepToolExe.FileOk
 
         SelectFile(opnfilediagSelectPrepToolExe, txtPathOfPrepToolExe)
-        prepToolExe = txtPathOfPrepToolExe.Text
-        debugMessages("Debug prepToolExe: ", lblDebug_prepToolExe, prepToolExe)
+        PrepToolExe = txtPathOfPrepToolExe.Text
+        'debugMessages("Debug prepToolExe: ", lblDebug_prepToolExe, prepToolExe)
 
     End Sub
 
@@ -168,16 +162,15 @@ Public Class Form1
 
     End Sub
 
-    Sub StartContentPrep(prepExe As String, args As String) ' prepExe is the IntuneWinAppUtil.exe filepath
+    Sub StartContentPrep(Executable As String, Args As String) ' prepExe is the IntuneWinAppUtil.exe filepath, I would like to directly call this instead of calling powershell later.
 
         Dim sb As New StringBuilder()
-        sb.Append("").Append(args)
-        args = sb.ToString()
-
+        sb.Append("").Append(Args)
+        Args = sb.ToString()
 
         Try
             Dim proc As New Process
-            proc = Process.Start("powershell.exe", args)
+            proc = Process.Start(Executable, Args)
             proc.WaitForExit()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -193,12 +186,12 @@ Public Class Form1
 #Region " Catalog Choice Group Box "
     Private Sub GetGroupBoxCheckedRadioButton(grpBox As GroupBox)
 
-        Dim rbtn As RadioButton = grpBox.Controls.OfType(Of RadioButton).Where(Function(r) r.Checked = True).FirstOrDefault()
+        Dim RBtn As RadioButton = grpBox.Controls.OfType(Of RadioButton).Where(Function(r) r.Checked = True).FirstOrDefault()
 
-        If rbtn.Name = "radNo" Then
-            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "N")
+        If RBtn.Name = "radNo" Then
+            CatalogChoice = False
         Else
-            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "Y")
+            CatalogChoice = True
         End If
 
     End Sub
