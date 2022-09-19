@@ -139,7 +139,6 @@ Public Class Form1
 
         SelectFile(opnfilediagSelectPrepToolExe, txtPathOfPrepToolExe)
         PrepToolExe = txtPathOfPrepToolExe.Text
-        'debugMessages("Debug prepToolExe: ", lblDebug_prepToolExe, prepToolExe)
 
     End Sub
 
