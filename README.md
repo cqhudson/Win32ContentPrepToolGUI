@@ -1,6 +1,6 @@
 # Win32ContentPrepToolGUI
 
-### *_Project is in progress, currently does not work!_*
+### *_Project is in progress!_*
 
 `Win32ContentPrepToolGUI` is an open source wrapper for the [Win32 Content Prep Tool](https://github.com/Microsoft/Microsoft-Win32-Content-Prep-Tool) by Microsoft. I wrote this after seeing that there is no clean way of packaging .exe's and .msi's into a .intunewin file.
 
