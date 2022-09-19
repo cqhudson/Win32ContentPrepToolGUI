@@ -10,13 +10,17 @@
 '
 ' TODO:
 '
-'   Implement a fix for installerPath to include quotes around the filename if it includes spaces
+'  - Execute the content prepper
+'   1 Figure out how to start a process and execute external applications,
 '
-'   The installerPath MUST have quotes around the installer file if the file has spaces in the name
+'   2 Pass args to the content prepper
 '
-'   For example, if the installer is named "installme-now.msi", then there is no issue.
-'   But if the file is named "Install me now.msi" with spaces between the words, the file MUST be quote wrapped
-'   otherwise IntuneWinAppUtil.exe will complain about not being able to access the setup file.
+'   3 Make sure that no processes start UNLESS the selected app is the microsoft content prepper
+'
+'  - Make an option for catalog folders
+'
+
+'
 '
 
 Imports System.Text
@@ -29,7 +33,7 @@ Public Class Form1
     Dim outputFolder As String
     Dim prepToolExe As String
     Dim installerFileName As String
-    Dim catalogChoice As Boolean = False
+    'Dim catalogChoice As Boolean = False
 
 #Region " Buttons "
 
@@ -49,28 +53,37 @@ Public Class Form1
         Dim param_setupFolder As String = "-c"
         Dim param_setupFile As String = "-s"
         Dim param_outputFolder As String = "-o"
-        Dim param_catalogFolder As String = "-a"
+        'Dim param_catalogFolder As String = "-a" ' This will be used in the future
         Dim param_quietMode As String = "-q"
         Dim sp As String = " "
+        Dim powershell As String = "powershell.exe"
 
         Dim sb As New StringBuilder()
+        Dim sb2 As New StringBuilder()
         Dim args As String
 
+        Dim fixedInstaller As String
+        fixedInstaller = sb2.Append(Chr(34)).Append(sourceFolder).Append("\").Append(installerFileName).Append(Chr(34)).ToString()
 
+        sb.Append(prepToolExe).Append(sp)
         sb.Append(param_setupFolder).Append(sp).Append(sourceFolder)
-        sb.Append(sp).Append(param_setupFile).Append(sp).Append(sourceFolder).Append("\").Append(installerFileName)
+        sb.Append(sp).Append(param_setupFile).Append(sp).Append(fixedInstaller) '.Append(installerFileName_ForPowershell)
         sb.Append(sp).Append(param_outputFolder).Append(sp).Append(outputFolder)
         sb.Append(sp).Append(param_quietMode).ToString()
 
         args = sb.ToString()
+        txtArguments.Text = args
 
         debugMessages("Debug args: ", lblDebug_args, args)
 
-        txtArguments.Text = args
 
-        properties.FileName = prepToolExe
-        properties.Arguments = args
-        properties.WindowStyle = ProcessWindowStyle.Normal
+
+
+        'properties.FileName = prepToolExe
+        'properties.Arguments = args
+        'properties.WindowStyle = ProcessWindowStyle.Normal
+
+        StartContentPrep(prepToolExe, args)
 
     End Sub
 
@@ -105,13 +118,13 @@ Public Class Form1
     Private Sub opnfilediagSelectInstaller_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectInstaller.FileOk
 
         Dim sb As New StringBuilder()
-
         Dim reversedFilePath As String
-
         Dim index As Integer
+        Dim singleQuote As Integer = 39
 
         SelectFile(opnfilediagSelectInstaller, txtPathOfInstaller)
         installerPath = txtPathOfInstaller.Text
+
         reversedFilePath = StrReverse(installerPath)
 
         debugMessages("Debug installerPath: ", lblDebug_installerPath, installerPath)
@@ -127,14 +140,12 @@ Public Class Form1
                 installerFileName = reversedFilePath.Substring(0, index - 1)
                 installerFileName = StrReverse(installerFileName)
 
-                installerFileName = sb.Append(Chr(34)).Append(installerFileName).Append(Chr(34)).ToString() ' Add double quotation marks to the beginning and ending of filename
+                installerFileName = sb.Append(Chr(singleQuote)).Append(installerFileName).Append(Chr(singleQuote)).ToString() ' Add double quotation marks to the beginning and ending of filename
 
                 debugMessages("Installer filename is: ", lblDebug_installerFileName, installerFileName)
                 Exit For
             End If
         Next
-
-
 
     End Sub
     Private Sub opnfilediagSelectPrepToolExe_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectPrepToolExe.FileOk
@@ -164,6 +175,22 @@ Public Class Form1
 
     End Sub
 
+    Sub StartContentPrep(prepExe As String, args As String) ' prepExe is the IntuneWinAppUtil.exe filepath
+
+        Dim sb As New StringBuilder()
+        sb.Append("").Append(args)
+        args = sb.ToString()
+
+
+        Try
+            Dim proc As New Process
+            proc = Process.Start("powershell.exe", args)
+            proc.WaitForExit()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+
+    End Sub
 
     Sub debugMessages(debugMsg As String, debugLabel As Label, Optional debugValue As String = "")
         debugLabel.Text = debugMsg + debugValue
@@ -176,9 +203,9 @@ Public Class Form1
         Dim rbtn As RadioButton = grpBox.Controls.OfType(Of RadioButton).Where(Function(r) r.Checked = True).FirstOrDefault()
 
         If rbtn.Name = "radNo" Then
-            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "No")
+            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "N")
         Else
-            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "Yes")
+            debugMessages("Debug catalogChoice: ", lblDebug_catalogChoice, "Y")
         End If
 
     End Sub
@@ -192,6 +219,5 @@ Public Class Form1
     End Sub
 
 #End Region
-
 
 End Class

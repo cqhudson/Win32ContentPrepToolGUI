@@ -274,7 +274,7 @@ Partial Class Form1
         'lblDebug_installerFileName
         '
         Me.lblDebug_installerFileName.AutoSize = True
-        Me.lblDebug_installerFileName.Location = New System.Drawing.Point(106, 545)
+        Me.lblDebug_installerFileName.Location = New System.Drawing.Point(53, 589)
         Me.lblDebug_installerFileName.Name = "lblDebug_installerFileName"
         Me.lblDebug_installerFileName.Size = New System.Drawing.Size(148, 25)
         Me.lblDebug_installerFileName.TabIndex = 21
