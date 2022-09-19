@@ -50,6 +50,9 @@ Partial Class Form1
         Me.lblDebug_args = New System.Windows.Forms.Label()
         Me.txtArguments = New System.Windows.Forms.TextBox()
         Me.lblDebug_installerFileName = New System.Windows.Forms.Label()
+        Me.btnSelectCatalogFolder = New System.Windows.Forms.Button()
+        Me.txtCatalogFolder = New System.Windows.Forms.TextBox()
+        Me.lblPromptCatalogFolder = New System.Windows.Forms.Label()
         Me.grpCatalogFolder.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -152,7 +155,7 @@ Partial Class Form1
         Me.grpCatalogFolder.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.grpCatalogFolder.Controls.Add(Me.radNo)
         Me.grpCatalogFolder.Controls.Add(Me.radYes)
-        Me.grpCatalogFolder.Location = New System.Drawing.Point(23, 387)
+        Me.grpCatalogFolder.Location = New System.Drawing.Point(23, 467)
         Me.grpCatalogFolder.Name = "grpCatalogFolder"
         Me.grpCatalogFolder.Size = New System.Drawing.Size(273, 72)
         Me.grpCatalogFolder.TabIndex = 10
@@ -162,12 +165,10 @@ Partial Class Form1
         'radNo
         '
         Me.radNo.AutoSize = True
-        Me.radNo.Checked = True
         Me.radNo.Location = New System.Drawing.Point(160, 39)
         Me.radNo.Name = "radNo"
         Me.radNo.Size = New System.Drawing.Size(61, 29)
         Me.radNo.TabIndex = 1
-        Me.radNo.TabStop = True
         Me.radNo.Text = "No"
         Me.radNo.UseVisualStyleBackColor = True
         '
@@ -213,7 +214,8 @@ Partial Class Form1
         '
         'btnStartPackaging
         '
-        Me.btnStartPackaging.Location = New System.Drawing.Point(545, 401)
+        Me.btnStartPackaging.Enabled = False
+        Me.btnStartPackaging.Location = New System.Drawing.Point(545, 481)
         Me.btnStartPackaging.Name = "btnStartPackaging"
         Me.btnStartPackaging.Size = New System.Drawing.Size(152, 58)
         Me.btnStartPackaging.TabIndex = 14
@@ -250,7 +252,7 @@ Partial Class Form1
         'lblDebug_catalogChoice
         '
         Me.lblDebug_catalogChoice.AutoSize = True
-        Me.lblDebug_catalogChoice.Location = New System.Drawing.Point(957, 418)
+        Me.lblDebug_catalogChoice.Location = New System.Drawing.Point(939, 413)
         Me.lblDebug_catalogChoice.Name = "lblDebug_catalogChoice"
         Me.lblDebug_catalogChoice.Size = New System.Drawing.Size(193, 25)
         Me.lblDebug_catalogChoice.TabIndex = 18
@@ -281,11 +283,42 @@ Partial Class Form1
         Me.lblDebug_installerFileName.TabIndex = 21
         Me.lblDebug_installerFileName.Text = "Installer name is: "
         '
+        'btnSelectCatalogFolder
+        '
+        Me.btnSelectCatalogFolder.Enabled = False
+        Me.btnSelectCatalogFolder.Location = New System.Drawing.Point(545, 405)
+        Me.btnSelectCatalogFolder.Name = "btnSelectCatalogFolder"
+        Me.btnSelectCatalogFolder.Size = New System.Drawing.Size(152, 33)
+        Me.btnSelectCatalogFolder.TabIndex = 24
+        Me.btnSelectCatalogFolder.Text = "Select Folder"
+        Me.btnSelectCatalogFolder.UseVisualStyleBackColor = True
+        '
+        'txtCatalogFolder
+        '
+        Me.txtCatalogFolder.Location = New System.Drawing.Point(23, 405)
+        Me.txtCatalogFolder.Name = "txtCatalogFolder"
+        Me.txtCatalogFolder.PlaceholderText = "Path of catalog folder"
+        Me.txtCatalogFolder.ReadOnly = True
+        Me.txtCatalogFolder.Size = New System.Drawing.Size(516, 31)
+        Me.txtCatalogFolder.TabIndex = 23
+        '
+        'lblPromptCatalogFolder
+        '
+        Me.lblPromptCatalogFolder.AutoSize = True
+        Me.lblPromptCatalogFolder.Location = New System.Drawing.Point(23, 377)
+        Me.lblPromptCatalogFolder.Name = "lblPromptCatalogFolder"
+        Me.lblPromptCatalogFolder.Size = New System.Drawing.Size(173, 25)
+        Me.lblPromptCatalogFolder.TabIndex = 22
+        Me.lblPromptCatalogFolder.Text = "Select catalog folder"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(712, 652)
+        Me.ClientSize = New System.Drawing.Size(717, 652)
+        Me.Controls.Add(Me.btnSelectCatalogFolder)
+        Me.Controls.Add(Me.txtCatalogFolder)
+        Me.Controls.Add(Me.lblPromptCatalogFolder)
         Me.Controls.Add(Me.lblDebug_installerFileName)
         Me.Controls.Add(Me.txtArguments)
         Me.Controls.Add(Me.lblDebug_args)
@@ -308,6 +341,7 @@ Partial Class Form1
         Me.Controls.Add(Me.lblPromptSelectInstaller)
         Me.Controls.Add(Me.btnSelectInstaller)
         Me.Controls.Add(Me.txtPathOfInstaller)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "Form1"
         Me.Text = "Win32 Content Prep Tool GUI"
         Me.grpCatalogFolder.ResumeLayout(False)
@@ -345,4 +379,7 @@ Partial Class Form1
     Friend WithEvents lblDebug_args As Label
     Friend WithEvents txtArguments As TextBox
     Friend WithEvents lblDebug_installerFileName As Label
+    Friend WithEvents btnSelectCatalogFolder As Button
+    Friend WithEvents txtCatalogFolder As TextBox
+    Friend WithEvents lblPromptCatalogFolder As Label
 End Class
