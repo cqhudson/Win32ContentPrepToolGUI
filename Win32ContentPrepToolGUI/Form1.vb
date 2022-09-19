@@ -1,5 +1,5 @@
 ﻿'
-' Author: Connor Hudson
+' Author: xcqhj
 '
 ' Date: 15-Sept-2022
 '
@@ -75,13 +75,6 @@ Public Class Form1
         txtArguments.Text = args
 
         debugMessages("Debug args: ", lblDebug_args, args)
-
-
-
-
-        'properties.FileName = prepToolExe
-        'properties.Arguments = args
-        'properties.WindowStyle = ProcessWindowStyle.Normal
 
         StartContentPrep(prepToolExe, args)
 
