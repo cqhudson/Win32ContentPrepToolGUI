@@ -80,6 +80,12 @@ Public Class Form1
         ofd.ShowDialog()
 
     End Sub
+    Private Sub btnSelectCatalogFolder_Click(sender As Object, e As EventArgs) Handles btnSelectCatalogFolder.Click
+
+        SelectFolder(fbdiagSelectCatalogFolder, txtCatalogFolder)
+        CatalogFolder = txtCatalogFolder.Text
+
+    End Sub
 
 #End Region
 
@@ -242,6 +248,8 @@ Public Class Form1
         GetGroupBoxCheckedRadioButton(grpCatalogFolder)
 
     End Sub
+
+
 
 #End Region
 

@@ -53,6 +53,7 @@ Partial Class Form1
         Me.btnSelectCatalogFolder = New System.Windows.Forms.Button()
         Me.txtCatalogFolder = New System.Windows.Forms.TextBox()
         Me.lblPromptCatalogFolder = New System.Windows.Forms.Label()
+        Me.fbdiagSelectCatalogFolder = New System.Windows.Forms.FolderBrowserDialog()
         Me.grpCatalogFolder.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -382,4 +383,5 @@ Partial Class Form1
     Friend WithEvents btnSelectCatalogFolder As Button
     Friend WithEvents txtCatalogFolder As TextBox
     Friend WithEvents lblPromptCatalogFolder As Label
+    Friend WithEvents fbdiagSelectCatalogFolder As FolderBrowserDialog
 End Class
