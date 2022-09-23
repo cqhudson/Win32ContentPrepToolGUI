@@ -34,7 +34,6 @@ Partial Class Form1
         Me.txtOutputFolderPath = New System.Windows.Forms.TextBox()
         Me.lblPromptOutput = New System.Windows.Forms.Label()
         Me.fbdiagSelectOutputFolder = New System.Windows.Forms.FolderBrowserDialog()
-        Me.lblDebug_prepToolExe = New System.Windows.Forms.Label()
         Me.grpCatalogFolder = New System.Windows.Forms.GroupBox()
         Me.radNo = New System.Windows.Forms.RadioButton()
         Me.radYes = New System.Windows.Forms.RadioButton()
@@ -43,23 +42,17 @@ Partial Class Form1
         Me.txtPathOfPrepToolExe = New System.Windows.Forms.TextBox()
         Me.opnfilediagSelectPrepToolExe = New System.Windows.Forms.OpenFileDialog()
         Me.btnStartPackaging = New System.Windows.Forms.Button()
-        Me.lblDebug_installerPath = New System.Windows.Forms.Label()
-        Me.lblDebug_installerFolder = New System.Windows.Forms.Label()
-        Me.lblDebug_outputFolder = New System.Windows.Forms.Label()
-        Me.lblDebug_catalogChoice = New System.Windows.Forms.Label()
-        Me.lblDebug_args = New System.Windows.Forms.Label()
-        Me.txtArguments = New System.Windows.Forms.TextBox()
-        Me.lblDebug_installerFileName = New System.Windows.Forms.Label()
         Me.btnSelectCatalogFolder = New System.Windows.Forms.Button()
         Me.txtCatalogFolder = New System.Windows.Forms.TextBox()
         Me.lblPromptCatalogFolder = New System.Windows.Forms.Label()
         Me.fbdiagSelectCatalogFolder = New System.Windows.Forms.FolderBrowserDialog()
+        Me.lblCopyrightNotice = New System.Windows.Forms.Label()
         Me.grpCatalogFolder.SuspendLayout()
         Me.SuspendLayout()
         '
         'txtPathOfInstaller
         '
-        Me.txtPathOfInstaller.Location = New System.Drawing.Point(23, 145)
+        Me.txtPathOfInstaller.Location = New System.Drawing.Point(13, 139)
         Me.txtPathOfInstaller.Name = "txtPathOfInstaller"
         Me.txtPathOfInstaller.PlaceholderText = "Path of installer"
         Me.txtPathOfInstaller.ReadOnly = True
@@ -68,7 +61,7 @@ Partial Class Form1
         '
         'btnSelectInstaller
         '
-        Me.btnSelectInstaller.Location = New System.Drawing.Point(545, 143)
+        Me.btnSelectInstaller.Location = New System.Drawing.Point(535, 137)
         Me.btnSelectInstaller.Name = "btnSelectInstaller"
         Me.btnSelectInstaller.Size = New System.Drawing.Size(152, 34)
         Me.btnSelectInstaller.TabIndex = 1
@@ -81,7 +74,7 @@ Partial Class Form1
         'lblPromptSelectInstaller
         '
         Me.lblPromptSelectInstaller.AutoSize = True
-        Me.lblPromptSelectInstaller.Location = New System.Drawing.Point(23, 117)
+        Me.lblPromptSelectInstaller.Location = New System.Drawing.Point(13, 111)
         Me.lblPromptSelectInstaller.Name = "lblPromptSelectInstaller"
         Me.lblPromptSelectInstaller.Size = New System.Drawing.Size(360, 25)
         Me.lblPromptSelectInstaller.TabIndex = 2
@@ -90,7 +83,7 @@ Partial Class Form1
         'lblPromptSelectInstallerFolder
         '
         Me.lblPromptSelectInstallerFolder.AutoSize = True
-        Me.lblPromptSelectInstallerFolder.Location = New System.Drawing.Point(23, 207)
+        Me.lblPromptSelectInstallerFolder.Location = New System.Drawing.Point(13, 201)
         Me.lblPromptSelectInstallerFolder.Name = "lblPromptSelectInstallerFolder"
         Me.lblPromptSelectInstallerFolder.Size = New System.Drawing.Size(674, 25)
         Me.lblPromptSelectInstallerFolder.TabIndex = 3
@@ -99,7 +92,7 @@ Partial Class Form1
         '
         'txtPathOfInstallerFolder
         '
-        Me.txtPathOfInstallerFolder.Location = New System.Drawing.Point(23, 235)
+        Me.txtPathOfInstallerFolder.Location = New System.Drawing.Point(13, 229)
         Me.txtPathOfInstallerFolder.Name = "txtPathOfInstallerFolder"
         Me.txtPathOfInstallerFolder.PlaceholderText = "Path of the folder that the installer is located in"
         Me.txtPathOfInstallerFolder.ReadOnly = True
@@ -108,7 +101,7 @@ Partial Class Form1
         '
         'btnSelectInstallerFolder
         '
-        Me.btnSelectInstallerFolder.Location = New System.Drawing.Point(545, 235)
+        Me.btnSelectInstallerFolder.Location = New System.Drawing.Point(535, 229)
         Me.btnSelectInstallerFolder.Name = "btnSelectInstallerFolder"
         Me.btnSelectInstallerFolder.Size = New System.Drawing.Size(152, 33)
         Me.btnSelectInstallerFolder.TabIndex = 5
@@ -117,7 +110,7 @@ Partial Class Form1
         '
         'btnSelectOutputFolder
         '
-        Me.btnSelectOutputFolder.Location = New System.Drawing.Point(545, 321)
+        Me.btnSelectOutputFolder.Location = New System.Drawing.Point(535, 315)
         Me.btnSelectOutputFolder.Name = "btnSelectOutputFolder"
         Me.btnSelectOutputFolder.Size = New System.Drawing.Size(152, 33)
         Me.btnSelectOutputFolder.TabIndex = 8
@@ -126,7 +119,7 @@ Partial Class Form1
         '
         'txtOutputFolderPath
         '
-        Me.txtOutputFolderPath.Location = New System.Drawing.Point(23, 321)
+        Me.txtOutputFolderPath.Location = New System.Drawing.Point(13, 315)
         Me.txtOutputFolderPath.Name = "txtOutputFolderPath"
         Me.txtOutputFolderPath.PlaceholderText = "Path of the folder that *.intunewin will be saved in"
         Me.txtOutputFolderPath.ReadOnly = True
@@ -136,27 +129,18 @@ Partial Class Form1
         'lblPromptOutput
         '
         Me.lblPromptOutput.AutoSize = True
-        Me.lblPromptOutput.Location = New System.Drawing.Point(23, 293)
+        Me.lblPromptOutput.Location = New System.Drawing.Point(13, 287)
         Me.lblPromptOutput.Name = "lblPromptOutput"
         Me.lblPromptOutput.Size = New System.Drawing.Size(571, 25)
         Me.lblPromptOutput.TabIndex = 6
         Me.lblPromptOutput.Text = "Select the output folder (Where the generated .intunewin will be saved)"
-        '
-        'lblDebug_prepToolExe
-        '
-        Me.lblDebug_prepToolExe.AutoSize = True
-        Me.lblDebug_prepToolExe.Location = New System.Drawing.Point(951, 55)
-        Me.lblDebug_prepToolExe.Name = "lblDebug_prepToolExe"
-        Me.lblDebug_prepToolExe.Size = New System.Drawing.Size(181, 25)
-        Me.lblDebug_prepToolExe.TabIndex = 9
-        Me.lblDebug_prepToolExe.Text = "Debug prepToolExe : "
         '
         'grpCatalogFolder
         '
         Me.grpCatalogFolder.BackColor = System.Drawing.SystemColors.ActiveCaption
         Me.grpCatalogFolder.Controls.Add(Me.radNo)
         Me.grpCatalogFolder.Controls.Add(Me.radYes)
-        Me.grpCatalogFolder.Location = New System.Drawing.Point(23, 467)
+        Me.grpCatalogFolder.Location = New System.Drawing.Point(13, 461)
         Me.grpCatalogFolder.Name = "grpCatalogFolder"
         Me.grpCatalogFolder.Size = New System.Drawing.Size(273, 72)
         Me.grpCatalogFolder.TabIndex = 10
@@ -186,7 +170,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(23, 31)
+        Me.Label1.Location = New System.Drawing.Point(13, 25)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(350, 25)
         Me.Label1.TabIndex = 0
@@ -194,7 +178,7 @@ Partial Class Form1
         '
         'btnSelectPrepToolExe
         '
-        Me.btnSelectPrepToolExe.Location = New System.Drawing.Point(545, 57)
+        Me.btnSelectPrepToolExe.Location = New System.Drawing.Point(535, 51)
         Me.btnSelectPrepToolExe.Name = "btnSelectPrepToolExe"
         Me.btnSelectPrepToolExe.Size = New System.Drawing.Size(152, 34)
         Me.btnSelectPrepToolExe.TabIndex = 12
@@ -203,7 +187,7 @@ Partial Class Form1
         '
         'txtPathOfPrepToolExe
         '
-        Me.txtPathOfPrepToolExe.Location = New System.Drawing.Point(23, 59)
+        Me.txtPathOfPrepToolExe.Location = New System.Drawing.Point(13, 53)
         Me.txtPathOfPrepToolExe.Name = "txtPathOfPrepToolExe"
         Me.txtPathOfPrepToolExe.PlaceholderText = "Path of prep tool executable"
         Me.txtPathOfPrepToolExe.ReadOnly = True
@@ -216,78 +200,17 @@ Partial Class Form1
         'btnStartPackaging
         '
         Me.btnStartPackaging.Enabled = False
-        Me.btnStartPackaging.Location = New System.Drawing.Point(545, 481)
+        Me.btnStartPackaging.Location = New System.Drawing.Point(535, 475)
         Me.btnStartPackaging.Name = "btnStartPackaging"
         Me.btnStartPackaging.Size = New System.Drawing.Size(152, 58)
         Me.btnStartPackaging.TabIndex = 14
         Me.btnStartPackaging.Text = "Generate .intunewin"
         Me.btnStartPackaging.UseVisualStyleBackColor = True
         '
-        'lblDebug_installerPath
-        '
-        Me.lblDebug_installerPath.AutoSize = True
-        Me.lblDebug_installerPath.Location = New System.Drawing.Point(951, 141)
-        Me.lblDebug_installerPath.Name = "lblDebug_installerPath"
-        Me.lblDebug_installerPath.Size = New System.Drawing.Size(179, 25)
-        Me.lblDebug_installerPath.TabIndex = 15
-        Me.lblDebug_installerPath.Text = "Debug installerPath : "
-        '
-        'lblDebug_installerFolder
-        '
-        Me.lblDebug_installerFolder.AutoSize = True
-        Me.lblDebug_installerFolder.Location = New System.Drawing.Point(951, 227)
-        Me.lblDebug_installerFolder.Name = "lblDebug_installerFolder"
-        Me.lblDebug_installerFolder.Size = New System.Drawing.Size(195, 25)
-        Me.lblDebug_installerFolder.TabIndex = 16
-        Me.lblDebug_installerFolder.Text = "Debug installerFolder : "
-        '
-        'lblDebug_outputFolder
-        '
-        Me.lblDebug_outputFolder.AutoSize = True
-        Me.lblDebug_outputFolder.Location = New System.Drawing.Point(951, 313)
-        Me.lblDebug_outputFolder.Name = "lblDebug_outputFolder"
-        Me.lblDebug_outputFolder.Size = New System.Drawing.Size(189, 25)
-        Me.lblDebug_outputFolder.TabIndex = 17
-        Me.lblDebug_outputFolder.Text = "Debug outputFolder : "
-        '
-        'lblDebug_catalogChoice
-        '
-        Me.lblDebug_catalogChoice.AutoSize = True
-        Me.lblDebug_catalogChoice.Location = New System.Drawing.Point(939, 413)
-        Me.lblDebug_catalogChoice.Name = "lblDebug_catalogChoice"
-        Me.lblDebug_catalogChoice.Size = New System.Drawing.Size(193, 25)
-        Me.lblDebug_catalogChoice.TabIndex = 18
-        Me.lblDebug_catalogChoice.Text = "Debug catalog choice: "
-        '
-        'lblDebug_args
-        '
-        Me.lblDebug_args.AutoSize = True
-        Me.lblDebug_args.Location = New System.Drawing.Point(808, 528)
-        Me.lblDebug_args.Name = "lblDebug_args"
-        Me.lblDebug_args.Size = New System.Drawing.Size(165, 25)
-        Me.lblDebug_args.TabIndex = 19
-        Me.lblDebug_args.Text = "Debug arguments: "
-        '
-        'txtArguments
-        '
-        Me.txtArguments.Location = New System.Drawing.Point(802, 583)
-        Me.txtArguments.Name = "txtArguments"
-        Me.txtArguments.Size = New System.Drawing.Size(280, 31)
-        Me.txtArguments.TabIndex = 20
-        '
-        'lblDebug_installerFileName
-        '
-        Me.lblDebug_installerFileName.AutoSize = True
-        Me.lblDebug_installerFileName.Location = New System.Drawing.Point(23, 618)
-        Me.lblDebug_installerFileName.Name = "lblDebug_installerFileName"
-        Me.lblDebug_installerFileName.Size = New System.Drawing.Size(148, 25)
-        Me.lblDebug_installerFileName.TabIndex = 21
-        Me.lblDebug_installerFileName.Text = "Installer name is: "
-        '
         'btnSelectCatalogFolder
         '
         Me.btnSelectCatalogFolder.Enabled = False
-        Me.btnSelectCatalogFolder.Location = New System.Drawing.Point(545, 405)
+        Me.btnSelectCatalogFolder.Location = New System.Drawing.Point(535, 399)
         Me.btnSelectCatalogFolder.Name = "btnSelectCatalogFolder"
         Me.btnSelectCatalogFolder.Size = New System.Drawing.Size(152, 33)
         Me.btnSelectCatalogFolder.TabIndex = 24
@@ -296,7 +219,7 @@ Partial Class Form1
         '
         'txtCatalogFolder
         '
-        Me.txtCatalogFolder.Location = New System.Drawing.Point(23, 405)
+        Me.txtCatalogFolder.Location = New System.Drawing.Point(13, 399)
         Me.txtCatalogFolder.Name = "txtCatalogFolder"
         Me.txtCatalogFolder.PlaceholderText = "Path of catalog folder"
         Me.txtCatalogFolder.ReadOnly = True
@@ -306,33 +229,34 @@ Partial Class Form1
         'lblPromptCatalogFolder
         '
         Me.lblPromptCatalogFolder.AutoSize = True
-        Me.lblPromptCatalogFolder.Location = New System.Drawing.Point(23, 377)
+        Me.lblPromptCatalogFolder.Location = New System.Drawing.Point(13, 371)
         Me.lblPromptCatalogFolder.Name = "lblPromptCatalogFolder"
         Me.lblPromptCatalogFolder.Size = New System.Drawing.Size(173, 25)
         Me.lblPromptCatalogFolder.TabIndex = 22
         Me.lblPromptCatalogFolder.Text = "Select catalog folder"
         '
+        'lblCopyrightNotice
+        '
+        Me.lblCopyrightNotice.AutoSize = True
+        Me.lblCopyrightNotice.Location = New System.Drawing.Point(12, 585)
+        Me.lblCopyrightNotice.Name = "lblCopyrightNotice"
+        Me.lblCopyrightNotice.Size = New System.Drawing.Size(0, 25)
+        Me.lblCopyrightNotice.TabIndex = 25
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(717, 652)
+        Me.ClientSize = New System.Drawing.Size(698, 554)
+        Me.Controls.Add(Me.lblCopyrightNotice)
         Me.Controls.Add(Me.btnSelectCatalogFolder)
         Me.Controls.Add(Me.txtCatalogFolder)
         Me.Controls.Add(Me.lblPromptCatalogFolder)
-        Me.Controls.Add(Me.lblDebug_installerFileName)
-        Me.Controls.Add(Me.txtArguments)
-        Me.Controls.Add(Me.lblDebug_args)
-        Me.Controls.Add(Me.lblDebug_catalogChoice)
-        Me.Controls.Add(Me.lblDebug_outputFolder)
-        Me.Controls.Add(Me.lblDebug_installerFolder)
-        Me.Controls.Add(Me.lblDebug_installerPath)
         Me.Controls.Add(Me.btnStartPackaging)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnSelectPrepToolExe)
         Me.Controls.Add(Me.txtPathOfPrepToolExe)
         Me.Controls.Add(Me.grpCatalogFolder)
-        Me.Controls.Add(Me.lblDebug_prepToolExe)
         Me.Controls.Add(Me.btnSelectOutputFolder)
         Me.Controls.Add(Me.txtOutputFolderPath)
         Me.Controls.Add(Me.lblPromptOutput)
@@ -344,7 +268,7 @@ Partial Class Form1
         Me.Controls.Add(Me.txtPathOfInstaller)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "Form1"
-        Me.Text = "Win32 Content Prep Tool GUI"
+        Me.Text = "Win32 Content Prep Tool GUI   |   © 2022 - Connor Hudson"
         Me.grpCatalogFolder.ResumeLayout(False)
         Me.grpCatalogFolder.PerformLayout()
         Me.ResumeLayout(False)
@@ -364,7 +288,6 @@ Partial Class Form1
     Friend WithEvents txtOutputFolderPath As TextBox
     Friend WithEvents lblPromptOutput As Label
     Friend WithEvents fbdiagSelectOutputFolder As FolderBrowserDialog
-    Friend WithEvents lblDebug_prepToolExe As Label
     Friend WithEvents grpCatalogFolder As GroupBox
     Friend WithEvents radNo As RadioButton
     Friend WithEvents radYes As RadioButton
@@ -373,15 +296,9 @@ Partial Class Form1
     Friend WithEvents txtPathOfPrepToolExe As TextBox
     Friend WithEvents opnfilediagSelectPrepToolExe As OpenFileDialog
     Friend WithEvents btnStartPackaging As Button
-    Friend WithEvents lblDebug_installerPath As Label
-    Friend WithEvents lblDebug_installerFolder As Label
-    Friend WithEvents lblDebug_outputFolder As Label
-    Friend WithEvents lblDebug_catalogChoice As Label
-    Friend WithEvents lblDebug_args As Label
-    Friend WithEvents txtArguments As TextBox
-    Friend WithEvents lblDebug_installerFileName As Label
     Friend WithEvents btnSelectCatalogFolder As Button
     Friend WithEvents txtCatalogFolder As TextBox
     Friend WithEvents lblPromptCatalogFolder As Label
     Friend WithEvents fbdiagSelectCatalogFolder As FolderBrowserDialog
+    Friend WithEvents lblCopyrightNotice As Label
 End Class

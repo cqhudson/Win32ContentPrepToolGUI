@@ -1,19 +1,7 @@
 ﻿'
+' © 2022 - Connor Hudson
+'
 ' Author: Connor Hudson
-'
-' Date: 15-Sept-2022
-'
-
-
-
-
-'
-' TODO:
-'
-' 
-'  - Make an option for catalog folders
-'     - This is done, now we need a folder dialog browser to select the catalog folder.
-'
 '
 
 Imports System.Text
@@ -115,7 +103,6 @@ Public Class Form1
 
                 SetupFileName = sb.Append(Chr(SingleQuote)).Append(SetupFileName).Append(Chr(SingleQuote)).ToString() ' Add double quotation marks to the beginning and ending of filename
 
-                debugMessages("Installer filename is: ", lblDebug_installerFileName, SetupFileName)
                 Exit For
             End If
         Next
@@ -163,11 +150,14 @@ Public Class Form1
 
     End Sub
 
-    Sub debugMessages(debugMsg As String, debugLabel As Label, Optional debugValue As String = "")
+    '
+    ' Uncomment this function to use labels and textboxes for debugging
+    '
+    'Sub debugMessages(debugMsg As String, debugLabel As Label, Optional debugValue As String = "")
 
-        debugLabel.Text = debugMsg + debugValue
+    '    debugLabel.Text = debugMsg + debugValue
 
-    End Sub
+    'End Sub
 
     Sub CatalogFolderChoice(btn As Button, txtbox As TextBox, choice As Boolean)
 
@@ -248,6 +238,7 @@ Public Class Form1
         GetGroupBoxCheckedRadioButton(grpCatalogFolder)
 
     End Sub
+
 
 
 
