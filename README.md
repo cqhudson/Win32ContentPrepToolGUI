@@ -8,7 +8,7 @@ Written in Visual Basic .NET, `Win32ContentPrepToolGUI` is a Windows Forms Appli
 
 # How to use
 
-Go to the **Releases** tab and download the latest version of WIn32ContentPrepToolGUI.exe (There is a 32 bit and a 64 bit version of each release)
+Go to the **Releases** tab and download the latest version of `WIn32ContentPrepToolGUI.exe` (**There is a 32 bit and a 64 bit version of each release**)
 
 Download the official [Win32 Content Prep Tool (IntuneWinAppUtil.exe)](https://github.com/Microsoft/Microsoft-Win32-Content-Prep-Tool) from Microsoft's official repo.
 
