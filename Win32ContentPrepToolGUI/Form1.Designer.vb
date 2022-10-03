@@ -233,7 +233,8 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(698, 546)
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ClientSize = New System.Drawing.Size(698, 554)
         Me.Controls.Add(Me.chkQuietMode)
         Me.Controls.Add(Me.chkCatalogFolder)
         Me.Controls.Add(Me.lblCopyrightNotice)
@@ -253,8 +254,10 @@ Partial Class Form1
         Me.Controls.Add(Me.lblPromptSelectInstaller)
         Me.Controls.Add(Me.btnSelectInstaller)
         Me.Controls.Add(Me.txtPathOfInstaller)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
+        Me.MaximizeBox = False
         Me.Name = "Form1"
+        Me.ShowIcon = False
         Me.Text = "Win32 Content Prep Tool GUI   |   © 2022 - Connor Hudson"
         Me.ResumeLayout(False)
         Me.PerformLayout()
