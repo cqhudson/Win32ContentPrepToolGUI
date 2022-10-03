@@ -5,7 +5,6 @@
 '
 
 Imports System.Text
-Imports System.Windows.Forms.VisualStyles
 
 Public Class Form1
 
@@ -18,7 +17,6 @@ Public Class Form1
 
     Dim SetupFileName As String
     Dim CatalogFolder As String
-    Dim CatalogChoice As Boolean = False
 
 #Region " Buttons "
 
@@ -224,6 +222,8 @@ Public Class Form1
     Function CheckToEnablePackaging() As Boolean
 
         Dim Check1, Check2, Check3, Check4, Check5 As Boolean
+        Const MsgTitle As String = "Please fill in all values."
+        Const MsgError As String = "One or more arguments was not specified, please make sure you fill in all values!"
 
         If PrepToolExe = "" Then
             Check1 = False
@@ -259,7 +259,7 @@ Public Class Form1
             End If
 
             If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Or Check5 = False Then
-                MessageBox.Show("One or more arguments was not specified, please make sure you fill in all values!")
+                MessageBox.Show(MsgError, MsgTitle)
                 Return False
             Else
                 Return True
@@ -268,7 +268,7 @@ Public Class Form1
         Else
 
             If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Then
-                MessageBox.Show("One or more arguments was not specified, please make sure you fill in all values!")
+                MessageBox.Show(MsgError, MsgTitle)
                 Return False
             Else
                 Return True
