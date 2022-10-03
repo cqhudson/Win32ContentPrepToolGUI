@@ -5,14 +5,17 @@
 '
 
 Imports System.Text
+Imports System.Windows.Forms.VisualStyles
 
 Public Class Form1
 
     Dim HomeDrive As String = Environment.GetEnvironmentVariable("HOMEDRIVE")
+
     Dim SetupFile As String
     Dim SetupFolder As String
     Dim OutputFolder As String
     Dim PrepToolExe As String
+
     Dim SetupFileName As String
     Dim CatalogFolder As String
     Dim CatalogChoice As Boolean = False
@@ -30,20 +33,22 @@ Public Class Form1
     End Sub
     Private Sub btnStartPackaging_Click(sender As Object, e As EventArgs) Handles btnStartPackaging.Click
 
-        Dim properties As New ProcessStartInfo
+        If CheckToEnablePackaging() Then
+            Dim properties As New ProcessStartInfo
 
-        Dim PowerShell As String = "powershell.exe"
+            Dim PowerShell As String = "powershell.exe"
 
-        Dim sb As New StringBuilder()
-        Dim sb2 As New StringBuilder()
-        Dim Args As String
+            Dim sb As New StringBuilder()
+            Dim sb2 As New StringBuilder()
+            Dim Args As String
 
-        Dim PatchedSetupFilePath As String ' Use this to wrap the setup_file path in double quotations for PowerShell
-        PatchedSetupFilePath = sb2.Append(Chr(34)).Append(SetupFolder).Append("\").Append(SetupFileName).Append(Chr(34)).ToString()
+            Dim PatchedSetupFilePath As String ' Use this to wrap the setup_file path in double quotations for PowerShell
+            PatchedSetupFilePath = sb2.Append(Chr(34)).Append(SetupFolder).Append("\").Append(SetupFileName).Append(Chr(34)).ToString()
 
-        Args = GenerateArguments(PatchedSetupFilePath, CatalogChoice)
+            Args = GenerateArguments(PatchedSetupFilePath)
 
-        StartContentPrep(PowerShell, Args)
+            StartContentPrep(PowerShell, Args)
+        End If
 
     End Sub
 
@@ -172,7 +177,7 @@ Public Class Form1
 
     End Sub
 
-    Function GenerateArguments(PatchedSetupFilePath As String, Choice As Boolean) As String
+    Function GenerateArguments(PatchedSetupFilePath As String) As String
 
         Dim Args As String
         Dim ArgBuilder As New StringBuilder
@@ -184,22 +189,30 @@ Public Class Form1
         Dim Param_QuietMode As String = "-q"
         Dim Space As String = " "
 
-        If Choice Then ' If true, then generate args including a catalog folder
+        If chkCatalogFolder.Checked Then ' If true, then generate args including a catalog folder
 
             ArgBuilder.Append(PrepToolExe).Append(Space)
             ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
             ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(PatchedSetupFilePath)
             ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
             ArgBuilder.Append(Space).Append(Param_CatalogFolder).Append(Space).Append(CatalogFolder)
-            ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
 
-        Else ' Else generate args without a catalog folder 
+            ' Enable quiet mode if true
+            If chkQuietMode.Checked Then
+                ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
+            End If
+
+        Else
 
             ArgBuilder.Append(PrepToolExe).Append(Space)
             ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
             ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(PatchedSetupFilePath)
             ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
-            ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
+
+            ' Enable quiet mode if true
+            If chkQuietMode.Checked Then
+                ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
+            End If
 
         End If
 
@@ -208,40 +221,76 @@ Public Class Form1
 
     End Function
 
-#End Region
+    Function CheckToEnablePackaging() As Boolean
 
-#Region " Catalog Choice Group Box "
-    Private Sub GetGroupBoxCheckedRadioButton(grpBox As GroupBox)
+        Dim Check1, Check2, Check3, Check4, Check5 As Boolean
 
-        btnStartPackaging.Enabled = True
-
-        Dim RBtn As RadioButton = grpBox.Controls.OfType(Of RadioButton).Where(Function(r) r.Checked = True).FirstOrDefault()
-
-        If RBtn.Name = "radNo" Then
-            CatalogChoice = False
-            CatalogFolderChoice(btnSelectCatalogFolder, txtCatalogFolder, CatalogChoice)
+        If PrepToolExe = "" Then
+            Check1 = False
         Else
-            CatalogChoice = True
-            CatalogFolderChoice(btnSelectCatalogFolder, txtCatalogFolder, CatalogChoice)
+            Check1 = True
         End If
 
-    End Sub
+        If SetupFile = "" Then
+            Check2 = False
+        Else
+            Check2 = True
+        End If
 
-    Private Sub radYes_CheckedChanged(sender As Object, e As EventArgs) Handles radYes.CheckedChanged
+        If SetupFolder = "" Then
+            Check3 = False
+        Else
+            Check3 = True
+        End If
 
-        GetGroupBoxCheckedRadioButton(grpCatalogFolder)
-
-    End Sub
-
-    Private Sub radNo_CheckedChanged(sender As Object, e As EventArgs) Handles radNo.CheckedChanged
-
-        GetGroupBoxCheckedRadioButton(grpCatalogFolder)
-
-    End Sub
+        If OutputFolder = "" Then
+            Check4 = False
+        Else
+            Check4 = True
+        End If
 
 
+        If chkCatalogFolder.Checked Then
 
+            If CatalogFolder = "" Then
+                Check5 = False
+            Else
+                Check5 = True
+            End If
+
+            If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Or Check5 = False Then
+                MessageBox.Show("One or more arguments was not specified, please make sure you fill in all values!")
+                Return False
+            Else
+                Return True
+            End If
+
+        Else
+
+            If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Then
+                MessageBox.Show("One or more arguments was not specified, please make sure you fill in all values!")
+                Return False
+            Else
+                Return True
+            End If
+
+        End If
+
+
+    End Function
 
 #End Region
+
+    Private Sub chkCatalogFolder_CheckedChanged(sender As Object, e As EventArgs) Handles chkCatalogFolder.CheckedChanged
+        If chkCatalogFolder.Checked Then
+            btnSelectCatalogFolder.Enabled = True
+            txtCatalogFolder.Enabled = True
+        Else
+            btnSelectCatalogFolder.Enabled = False
+            txtCatalogFolder.Enabled = False
+            CatalogFolder = ""
+            txtCatalogFolder.Text = ""
+        End If
+    End Sub
 
 End Class
