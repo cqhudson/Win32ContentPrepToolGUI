@@ -5,7 +5,6 @@
 '
 
 Imports System.Text
-Imports System.Windows.Forms.VisualStyles
 
 Public Class Form1
 
@@ -18,7 +17,6 @@ Public Class Form1
 
     Dim SetupFileName As String
     Dim CatalogFolder As String
-    Dim CatalogChoice As Boolean = False
 
 #Region " Buttons "
 
