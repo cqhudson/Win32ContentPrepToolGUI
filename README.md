@@ -19,8 +19,6 @@ Download the official [Win32 Content Prep Tool (IntuneWinAppUtil.exe)](https://g
 2. Press the `Select File` button and select the setup file (This is usually a `setup.msi` or `setup.exe`).
 3. Press the `Select Folder` button and select the setup folder (All files in this folder will be packaged into the `.intunewin` format.
 4. Press the `Select Folder` button and select the output folder (This is where the `.intunewin` will be saved).
-5. `Select catalog folder` text box and its respective `Select Folder` button will be disabled until you specify `Yes` or `No` using the radio buttons below.
-    - If you selected `No` to the catalog folder prompt, then press the `Generate .intunewin` button.
-    - if you selected `Yes` then press the `Select Folder` button and choose your catalog folder (this is used when working with Windows S Mode) Then press the `Generate .intunewin` button.
-
-6. Celebrate, because you can now upload your .intunewin file to Intune, and you didn't have to type in those long file paths to do it.
+5. The `Select catalog folder` TextBox and its respective `Select Folder` Button will be disabled until you specify `yes` or `no` using the `CatalogFolder` CheckBox. If the CheckBox is Checked (True) then the TextBox and Button will be enabled and you must choose a catalog foler to continue.
+6. (OPTIONAL) - Choose whether or not you want to use Quiet Mode when generating your `.intunewin` file. By default, this is disabled.
+6. Celebrate, because you can now upload your `.intunewin` file to Intune, and you didn't have to type in those long file paths to do it.
