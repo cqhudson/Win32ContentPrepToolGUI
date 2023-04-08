@@ -22,246 +22,275 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.txtPathOfInstaller = New System.Windows.Forms.TextBox()
-        Me.btnSelectInstaller = New System.Windows.Forms.Button()
-        Me.opnfilediagSelectInstaller = New System.Windows.Forms.OpenFileDialog()
-        Me.lblPromptSelectInstaller = New System.Windows.Forms.Label()
-        Me.lblPromptSelectInstallerFolder = New System.Windows.Forms.Label()
-        Me.txtPathOfInstallerFolder = New System.Windows.Forms.TextBox()
-        Me.btnSelectInstallerFolder = New System.Windows.Forms.Button()
-        Me.fbdiagSelectSourceFolder = New System.Windows.Forms.FolderBrowserDialog()
-        Me.btnSelectOutputFolder = New System.Windows.Forms.Button()
-        Me.txtOutputFolderPath = New System.Windows.Forms.TextBox()
-        Me.lblPromptOutput = New System.Windows.Forms.Label()
-        Me.fbdiagSelectOutputFolder = New System.Windows.Forms.FolderBrowserDialog()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.btnSelectPrepToolExe = New System.Windows.Forms.Button()
-        Me.txtPathOfPrepToolExe = New System.Windows.Forms.TextBox()
-        Me.opnfilediagSelectPrepToolExe = New System.Windows.Forms.OpenFileDialog()
-        Me.btnStartPackaging = New System.Windows.Forms.Button()
-        Me.btnSelectCatalogFolder = New System.Windows.Forms.Button()
-        Me.txtCatalogFolder = New System.Windows.Forms.TextBox()
-        Me.lblPromptCatalogFolder = New System.Windows.Forms.Label()
-        Me.fbdiagSelectCatalogFolder = New System.Windows.Forms.FolderBrowserDialog()
-        Me.lblCopyrightNotice = New System.Windows.Forms.Label()
-        Me.chkCatalogFolder = New System.Windows.Forms.CheckBox()
-        Me.chkQuietMode = New System.Windows.Forms.CheckBox()
-        Me.SuspendLayout()
-        '
-        'txtPathOfInstaller
-        '
-        Me.txtPathOfInstaller.Location = New System.Drawing.Point(13, 139)
-        Me.txtPathOfInstaller.Name = "txtPathOfInstaller"
-        Me.txtPathOfInstaller.PlaceholderText = "Path of installer"
-        Me.txtPathOfInstaller.ReadOnly = True
-        Me.txtPathOfInstaller.Size = New System.Drawing.Size(516, 31)
-        Me.txtPathOfInstaller.TabIndex = 3
-        '
-        'btnSelectInstaller
-        '
-        Me.btnSelectInstaller.Location = New System.Drawing.Point(535, 137)
-        Me.btnSelectInstaller.Name = "btnSelectInstaller"
-        Me.btnSelectInstaller.Size = New System.Drawing.Size(152, 34)
-        Me.btnSelectInstaller.TabIndex = 2
-        Me.btnSelectInstaller.Text = "Select File"
-        Me.btnSelectInstaller.UseVisualStyleBackColor = True
-        '
-        'opnfilediagSelectInstaller
-        '
-        '
-        'lblPromptSelectInstaller
-        '
-        Me.lblPromptSelectInstaller.AutoSize = True
-        Me.lblPromptSelectInstaller.Location = New System.Drawing.Point(13, 111)
-        Me.lblPromptSelectInstaller.Name = "lblPromptSelectInstaller"
-        Me.lblPromptSelectInstaller.Size = New System.Drawing.Size(360, 25)
-        Me.lblPromptSelectInstaller.TabIndex = 2
-        Me.lblPromptSelectInstaller.Text = "Select setup file (e.g. setup.exe or setup.msi)"
-        '
-        'lblPromptSelectInstallerFolder
-        '
-        Me.lblPromptSelectInstallerFolder.AutoSize = True
-        Me.lblPromptSelectInstallerFolder.Location = New System.Drawing.Point(13, 201)
-        Me.lblPromptSelectInstallerFolder.Name = "lblPromptSelectInstallerFolder"
-        Me.lblPromptSelectInstallerFolder.Size = New System.Drawing.Size(674, 25)
-        Me.lblPromptSelectInstallerFolder.TabIndex = 3
-        Me.lblPromptSelectInstallerFolder.Text = "Select the setup folder (All files in this folder will be compressed into .intune" &
-    "win file.)"
-        '
-        'txtPathOfInstallerFolder
-        '
-        Me.txtPathOfInstallerFolder.Location = New System.Drawing.Point(13, 229)
-        Me.txtPathOfInstallerFolder.Name = "txtPathOfInstallerFolder"
-        Me.txtPathOfInstallerFolder.PlaceholderText = "Path of the folder that the installer is located in"
-        Me.txtPathOfInstallerFolder.ReadOnly = True
-        Me.txtPathOfInstallerFolder.Size = New System.Drawing.Size(516, 31)
-        Me.txtPathOfInstallerFolder.TabIndex = 5
-        '
-        'btnSelectInstallerFolder
-        '
-        Me.btnSelectInstallerFolder.Location = New System.Drawing.Point(535, 229)
-        Me.btnSelectInstallerFolder.Name = "btnSelectInstallerFolder"
-        Me.btnSelectInstallerFolder.Size = New System.Drawing.Size(152, 33)
-        Me.btnSelectInstallerFolder.TabIndex = 4
-        Me.btnSelectInstallerFolder.Text = "Select Folder"
-        Me.btnSelectInstallerFolder.UseVisualStyleBackColor = True
-        '
-        'btnSelectOutputFolder
-        '
-        Me.btnSelectOutputFolder.Location = New System.Drawing.Point(535, 315)
-        Me.btnSelectOutputFolder.Name = "btnSelectOutputFolder"
-        Me.btnSelectOutputFolder.Size = New System.Drawing.Size(152, 33)
-        Me.btnSelectOutputFolder.TabIndex = 6
-        Me.btnSelectOutputFolder.Text = "Select Folder"
-        Me.btnSelectOutputFolder.UseVisualStyleBackColor = True
-        '
-        'txtOutputFolderPath
-        '
-        Me.txtOutputFolderPath.Location = New System.Drawing.Point(13, 315)
-        Me.txtOutputFolderPath.Name = "txtOutputFolderPath"
-        Me.txtOutputFolderPath.PlaceholderText = "Path of the folder that *.intunewin will be saved in"
-        Me.txtOutputFolderPath.ReadOnly = True
-        Me.txtOutputFolderPath.Size = New System.Drawing.Size(516, 31)
-        Me.txtOutputFolderPath.TabIndex = 7
-        '
-        'lblPromptOutput
-        '
-        Me.lblPromptOutput.AutoSize = True
-        Me.lblPromptOutput.Location = New System.Drawing.Point(13, 287)
-        Me.lblPromptOutput.Name = "lblPromptOutput"
-        Me.lblPromptOutput.Size = New System.Drawing.Size(571, 25)
-        Me.lblPromptOutput.TabIndex = 6
-        Me.lblPromptOutput.Text = "Select the output folder (Where the generated .intunewin will be saved)"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(13, 25)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(350, 25)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Select the Microsoft Content Prep Tool EXE"
-        '
-        'btnSelectPrepToolExe
-        '
-        Me.btnSelectPrepToolExe.Location = New System.Drawing.Point(535, 51)
-        Me.btnSelectPrepToolExe.Name = "btnSelectPrepToolExe"
-        Me.btnSelectPrepToolExe.Size = New System.Drawing.Size(152, 34)
-        Me.btnSelectPrepToolExe.TabIndex = 0
-        Me.btnSelectPrepToolExe.Text = "Select File"
-        Me.btnSelectPrepToolExe.UseVisualStyleBackColor = True
-        '
-        'txtPathOfPrepToolExe
-        '
-        Me.txtPathOfPrepToolExe.Location = New System.Drawing.Point(13, 53)
-        Me.txtPathOfPrepToolExe.Name = "txtPathOfPrepToolExe"
-        Me.txtPathOfPrepToolExe.PlaceholderText = "Path of prep tool executable"
-        Me.txtPathOfPrepToolExe.ReadOnly = True
-        Me.txtPathOfPrepToolExe.Size = New System.Drawing.Size(516, 31)
-        Me.txtPathOfPrepToolExe.TabIndex = 1
-        '
-        'opnfilediagSelectPrepToolExe
-        '
-        '
-        'btnStartPackaging
-        '
-        Me.btnStartPackaging.Location = New System.Drawing.Point(535, 475)
-        Me.btnStartPackaging.Name = "btnStartPackaging"
-        Me.btnStartPackaging.Size = New System.Drawing.Size(152, 58)
-        Me.btnStartPackaging.TabIndex = 12
-        Me.btnStartPackaging.Text = "Generate .intunewin"
-        Me.btnStartPackaging.UseVisualStyleBackColor = True
-        '
-        'btnSelectCatalogFolder
-        '
-        Me.btnSelectCatalogFolder.Enabled = False
-        Me.btnSelectCatalogFolder.Location = New System.Drawing.Point(535, 399)
-        Me.btnSelectCatalogFolder.Name = "btnSelectCatalogFolder"
-        Me.btnSelectCatalogFolder.Size = New System.Drawing.Size(152, 33)
-        Me.btnSelectCatalogFolder.TabIndex = 8
-        Me.btnSelectCatalogFolder.Text = "Select Folder"
-        Me.btnSelectCatalogFolder.UseVisualStyleBackColor = True
-        '
-        'txtCatalogFolder
-        '
-        Me.txtCatalogFolder.Enabled = False
-        Me.txtCatalogFolder.Location = New System.Drawing.Point(13, 399)
-        Me.txtCatalogFolder.Name = "txtCatalogFolder"
-        Me.txtCatalogFolder.PlaceholderText = "Path of catalog folder"
-        Me.txtCatalogFolder.ReadOnly = True
-        Me.txtCatalogFolder.Size = New System.Drawing.Size(516, 31)
-        Me.txtCatalogFolder.TabIndex = 9
-        '
-        'lblPromptCatalogFolder
-        '
-        Me.lblPromptCatalogFolder.AutoSize = True
-        Me.lblPromptCatalogFolder.Location = New System.Drawing.Point(13, 371)
-        Me.lblPromptCatalogFolder.Name = "lblPromptCatalogFolder"
-        Me.lblPromptCatalogFolder.Size = New System.Drawing.Size(173, 25)
-        Me.lblPromptCatalogFolder.TabIndex = 22
-        Me.lblPromptCatalogFolder.Text = "Select catalog folder"
-        '
-        'lblCopyrightNotice
-        '
-        Me.lblCopyrightNotice.AutoSize = True
-        Me.lblCopyrightNotice.Location = New System.Drawing.Point(6, 475)
-        Me.lblCopyrightNotice.Name = "lblCopyrightNotice"
-        Me.lblCopyrightNotice.Size = New System.Drawing.Size(0, 25)
-        Me.lblCopyrightNotice.TabIndex = 25
-        '
-        'chkCatalogFolder
-        '
-        Me.chkCatalogFolder.AutoSize = True
-        Me.chkCatalogFolder.Location = New System.Drawing.Point(12, 456)
-        Me.chkCatalogFolder.Name = "chkCatalogFolder"
-        Me.chkCatalogFolder.Size = New System.Drawing.Size(185, 29)
-        Me.chkCatalogFolder.TabIndex = 10
-        Me.chkCatalogFolder.Text = "(-a) Catalog Folder"
-        Me.chkCatalogFolder.UseVisualStyleBackColor = True
-        '
-        'chkQuietMode
-        '
-        Me.chkQuietMode.AutoSize = True
-        Me.chkQuietMode.Location = New System.Drawing.Point(12, 491)
-        Me.chkQuietMode.Name = "chkQuietMode"
-        Me.chkQuietMode.Size = New System.Drawing.Size(166, 29)
-        Me.chkQuietMode.TabIndex = 11
-        Me.chkQuietMode.Text = "(-q) Quiet Mode"
-        Me.chkQuietMode.UseVisualStyleBackColor = True
-        '
-        'Form1
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 25.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(698, 554)
-        Me.Controls.Add(Me.chkQuietMode)
-        Me.Controls.Add(Me.chkCatalogFolder)
-        Me.Controls.Add(Me.lblCopyrightNotice)
-        Me.Controls.Add(Me.btnSelectCatalogFolder)
-        Me.Controls.Add(Me.txtCatalogFolder)
-        Me.Controls.Add(Me.lblPromptCatalogFolder)
-        Me.Controls.Add(Me.btnStartPackaging)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.btnSelectPrepToolExe)
-        Me.Controls.Add(Me.txtPathOfPrepToolExe)
-        Me.Controls.Add(Me.btnSelectOutputFolder)
-        Me.Controls.Add(Me.txtOutputFolderPath)
-        Me.Controls.Add(Me.lblPromptOutput)
-        Me.Controls.Add(Me.btnSelectInstallerFolder)
-        Me.Controls.Add(Me.txtPathOfInstallerFolder)
-        Me.Controls.Add(Me.lblPromptSelectInstallerFolder)
-        Me.Controls.Add(Me.lblPromptSelectInstaller)
-        Me.Controls.Add(Me.btnSelectInstaller)
-        Me.Controls.Add(Me.txtPathOfInstaller)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
-        Me.MaximizeBox = False
-        Me.Name = "Form1"
-        Me.ShowIcon = False
-        Me.Text = "Win32 Content Prep Tool GUI   |   © 2022 - Connor Hudson"
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
-
+        txtPathOfInstaller = New TextBox()
+        btnSelectInstaller = New Button()
+        opnfilediagSelectInstaller = New OpenFileDialog()
+        lblPromptSelectInstaller = New Label()
+        lblPromptSelectInstallerFolder = New Label()
+        txtPathOfInstallerFolder = New TextBox()
+        btnSelectInstallerFolder = New Button()
+        fbdiagSelectSourceFolder = New FolderBrowserDialog()
+        btnSelectOutputFolder = New Button()
+        txtOutputFolderPath = New TextBox()
+        lblPromptOutput = New Label()
+        fbdiagSelectOutputFolder = New FolderBrowserDialog()
+        Label1 = New Label()
+        btnSelectPrepToolExe = New Button()
+        txtPathOfPrepToolExe = New TextBox()
+        opnfilediagSelectPrepToolExe = New OpenFileDialog()
+        btnStartPackaging = New Button()
+        btnSelectCatalogFolder = New Button()
+        txtCatalogFolder = New TextBox()
+        lblPromptCatalogFolder = New Label()
+        fbdiagSelectCatalogFolder = New FolderBrowserDialog()
+        lblCopyrightNotice = New Label()
+        chkCatalogFolder = New CheckBox()
+        chkQuietMode = New CheckBox()
+        Label2 = New Label()
+        SuspendLayout()
+        ' 
+        ' txtPathOfInstaller
+        ' 
+        txtPathOfInstaller.Location = New Point(9, 83)
+        txtPathOfInstaller.Margin = New Padding(2)
+        txtPathOfInstaller.Name = "txtPathOfInstaller"
+        txtPathOfInstaller.PlaceholderText = "Path of installer"
+        txtPathOfInstaller.ReadOnly = True
+        txtPathOfInstaller.Size = New Size(362, 23)
+        txtPathOfInstaller.TabIndex = 3
+        ' 
+        ' btnSelectInstaller
+        ' 
+        btnSelectInstaller.Location = New Point(374, 82)
+        btnSelectInstaller.Margin = New Padding(2)
+        btnSelectInstaller.Name = "btnSelectInstaller"
+        btnSelectInstaller.Size = New Size(106, 24)
+        btnSelectInstaller.TabIndex = 2
+        btnSelectInstaller.Text = "Select File"
+        btnSelectInstaller.UseVisualStyleBackColor = True
+        ' 
+        ' opnfilediagSelectInstaller
+        ' 
+        ' 
+        ' lblPromptSelectInstaller
+        ' 
+        lblPromptSelectInstaller.AutoSize = True
+        lblPromptSelectInstaller.Location = New Point(9, 67)
+        lblPromptSelectInstaller.Margin = New Padding(2, 0, 2, 0)
+        lblPromptSelectInstaller.Name = "lblPromptSelectInstaller"
+        lblPromptSelectInstaller.Size = New Size(240, 15)
+        lblPromptSelectInstaller.TabIndex = 2
+        lblPromptSelectInstaller.Text = "Select setup file (e.g. setup.exe or setup.msi)"
+        ' 
+        ' lblPromptSelectInstallerFolder
+        ' 
+        lblPromptSelectInstallerFolder.AutoSize = True
+        lblPromptSelectInstallerFolder.Location = New Point(9, 121)
+        lblPromptSelectInstallerFolder.Margin = New Padding(2, 0, 2, 0)
+        lblPromptSelectInstallerFolder.Name = "lblPromptSelectInstallerFolder"
+        lblPromptSelectInstallerFolder.Size = New Size(451, 15)
+        lblPromptSelectInstallerFolder.TabIndex = 3
+        lblPromptSelectInstallerFolder.Text = "Select the setup folder (All files in this folder will be compressed into .intunewin file.)"
+        ' 
+        ' txtPathOfInstallerFolder
+        ' 
+        txtPathOfInstallerFolder.Location = New Point(9, 137)
+        txtPathOfInstallerFolder.Margin = New Padding(2)
+        txtPathOfInstallerFolder.Name = "txtPathOfInstallerFolder"
+        txtPathOfInstallerFolder.PlaceholderText = "Path of the folder that the installer is located in"
+        txtPathOfInstallerFolder.ReadOnly = True
+        txtPathOfInstallerFolder.Size = New Size(362, 23)
+        txtPathOfInstallerFolder.TabIndex = 5
+        ' 
+        ' btnSelectInstallerFolder
+        ' 
+        btnSelectInstallerFolder.Location = New Point(374, 137)
+        btnSelectInstallerFolder.Margin = New Padding(2)
+        btnSelectInstallerFolder.Name = "btnSelectInstallerFolder"
+        btnSelectInstallerFolder.Size = New Size(106, 23)
+        btnSelectInstallerFolder.TabIndex = 4
+        btnSelectInstallerFolder.Text = "Select Folder"
+        btnSelectInstallerFolder.UseVisualStyleBackColor = True
+        ' 
+        ' btnSelectOutputFolder
+        ' 
+        btnSelectOutputFolder.Location = New Point(374, 189)
+        btnSelectOutputFolder.Margin = New Padding(2)
+        btnSelectOutputFolder.Name = "btnSelectOutputFolder"
+        btnSelectOutputFolder.Size = New Size(106, 23)
+        btnSelectOutputFolder.TabIndex = 6
+        btnSelectOutputFolder.Text = "Select Folder"
+        btnSelectOutputFolder.UseVisualStyleBackColor = True
+        ' 
+        ' txtOutputFolderPath
+        ' 
+        txtOutputFolderPath.Location = New Point(9, 189)
+        txtOutputFolderPath.Margin = New Padding(2)
+        txtOutputFolderPath.Name = "txtOutputFolderPath"
+        txtOutputFolderPath.PlaceholderText = "Path of the folder that *.intunewin will be saved in"
+        txtOutputFolderPath.ReadOnly = True
+        txtOutputFolderPath.Size = New Size(362, 23)
+        txtOutputFolderPath.TabIndex = 7
+        ' 
+        ' lblPromptOutput
+        ' 
+        lblPromptOutput.AutoSize = True
+        lblPromptOutput.Location = New Point(9, 172)
+        lblPromptOutput.Margin = New Padding(2, 0, 2, 0)
+        lblPromptOutput.Name = "lblPromptOutput"
+        lblPromptOutput.Size = New Size(381, 15)
+        lblPromptOutput.TabIndex = 6
+        lblPromptOutput.Text = "Select the output folder (Where the generated .intunewin will be saved)"
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Location = New Point(9, 15)
+        Label1.Margin = New Padding(2, 0, 2, 0)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(232, 15)
+        Label1.TabIndex = 0
+        Label1.Text = "Select the Microsoft Content Prep Tool EXE"
+        ' 
+        ' btnSelectPrepToolExe
+        ' 
+        btnSelectPrepToolExe.Location = New Point(374, 31)
+        btnSelectPrepToolExe.Margin = New Padding(2)
+        btnSelectPrepToolExe.Name = "btnSelectPrepToolExe"
+        btnSelectPrepToolExe.Size = New Size(106, 24)
+        btnSelectPrepToolExe.TabIndex = 0
+        btnSelectPrepToolExe.Text = "Select File"
+        btnSelectPrepToolExe.UseVisualStyleBackColor = True
+        ' 
+        ' txtPathOfPrepToolExe
+        ' 
+        txtPathOfPrepToolExe.Location = New Point(9, 32)
+        txtPathOfPrepToolExe.Margin = New Padding(2)
+        txtPathOfPrepToolExe.Name = "txtPathOfPrepToolExe"
+        txtPathOfPrepToolExe.PlaceholderText = "Path of prep tool executable"
+        txtPathOfPrepToolExe.ReadOnly = True
+        txtPathOfPrepToolExe.Size = New Size(362, 23)
+        txtPathOfPrepToolExe.TabIndex = 1
+        ' 
+        ' opnfilediagSelectPrepToolExe
+        ' 
+        ' 
+        ' btnStartPackaging
+        ' 
+        btnStartPackaging.Location = New Point(374, 285)
+        btnStartPackaging.Margin = New Padding(2)
+        btnStartPackaging.Name = "btnStartPackaging"
+        btnStartPackaging.Size = New Size(106, 35)
+        btnStartPackaging.TabIndex = 12
+        btnStartPackaging.Text = "Generate .intunewin"
+        btnStartPackaging.UseVisualStyleBackColor = True
+        ' 
+        ' btnSelectCatalogFolder
+        ' 
+        btnSelectCatalogFolder.Enabled = False
+        btnSelectCatalogFolder.Location = New Point(374, 239)
+        btnSelectCatalogFolder.Margin = New Padding(2)
+        btnSelectCatalogFolder.Name = "btnSelectCatalogFolder"
+        btnSelectCatalogFolder.Size = New Size(106, 23)
+        btnSelectCatalogFolder.TabIndex = 8
+        btnSelectCatalogFolder.Text = "Select Folder"
+        btnSelectCatalogFolder.UseVisualStyleBackColor = True
+        ' 
+        ' txtCatalogFolder
+        ' 
+        txtCatalogFolder.Enabled = False
+        txtCatalogFolder.Location = New Point(9, 239)
+        txtCatalogFolder.Margin = New Padding(2)
+        txtCatalogFolder.Name = "txtCatalogFolder"
+        txtCatalogFolder.PlaceholderText = "Path of catalog folder"
+        txtCatalogFolder.ReadOnly = True
+        txtCatalogFolder.Size = New Size(362, 23)
+        txtCatalogFolder.TabIndex = 9
+        ' 
+        ' lblPromptCatalogFolder
+        ' 
+        lblPromptCatalogFolder.AutoSize = True
+        lblPromptCatalogFolder.Location = New Point(9, 223)
+        lblPromptCatalogFolder.Margin = New Padding(2, 0, 2, 0)
+        lblPromptCatalogFolder.Name = "lblPromptCatalogFolder"
+        lblPromptCatalogFolder.Size = New Size(114, 15)
+        lblPromptCatalogFolder.TabIndex = 22
+        lblPromptCatalogFolder.Text = "Select catalog folder"
+        ' 
+        ' lblCopyrightNotice
+        ' 
+        lblCopyrightNotice.AutoSize = True
+        lblCopyrightNotice.Location = New Point(4, 285)
+        lblCopyrightNotice.Margin = New Padding(2, 0, 2, 0)
+        lblCopyrightNotice.Name = "lblCopyrightNotice"
+        lblCopyrightNotice.Size = New Size(0, 15)
+        lblCopyrightNotice.TabIndex = 25
+        ' 
+        ' chkCatalogFolder
+        ' 
+        chkCatalogFolder.AutoSize = True
+        chkCatalogFolder.Location = New Point(8, 274)
+        chkCatalogFolder.Margin = New Padding(2)
+        chkCatalogFolder.Name = "chkCatalogFolder"
+        chkCatalogFolder.Size = New Size(125, 19)
+        chkCatalogFolder.TabIndex = 10
+        chkCatalogFolder.Text = "(-a) Catalog Folder"
+        chkCatalogFolder.UseVisualStyleBackColor = True
+        ' 
+        ' chkQuietMode
+        ' 
+        chkQuietMode.AutoSize = True
+        chkQuietMode.Location = New Point(8, 295)
+        chkQuietMode.Margin = New Padding(2)
+        chkQuietMode.Name = "chkQuietMode"
+        chkQuietMode.Size = New Size(112, 19)
+        chkQuietMode.TabIndex = 11
+        chkQuietMode.Text = "(-q) Quiet Mode"
+        chkQuietMode.UseVisualStyleBackColor = True
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(8, 341)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(365, 15)
+        Label2.TabIndex = 27
+        Label2.Text = "Copyright 2022-2023 © CONNOR HUDSON   ---   https://hudson.tel"
+        ' 
+        ' Form1
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        BackgroundImageLayout = ImageLayout.Stretch
+        ClientSize = New Size(489, 365)
+        Controls.Add(Label2)
+        Controls.Add(chkQuietMode)
+        Controls.Add(chkCatalogFolder)
+        Controls.Add(lblCopyrightNotice)
+        Controls.Add(btnSelectCatalogFolder)
+        Controls.Add(txtCatalogFolder)
+        Controls.Add(lblPromptCatalogFolder)
+        Controls.Add(btnStartPackaging)
+        Controls.Add(Label1)
+        Controls.Add(btnSelectPrepToolExe)
+        Controls.Add(txtPathOfPrepToolExe)
+        Controls.Add(btnSelectOutputFolder)
+        Controls.Add(txtOutputFolderPath)
+        Controls.Add(lblPromptOutput)
+        Controls.Add(btnSelectInstallerFolder)
+        Controls.Add(txtPathOfInstallerFolder)
+        Controls.Add(lblPromptSelectInstallerFolder)
+        Controls.Add(lblPromptSelectInstaller)
+        Controls.Add(btnSelectInstaller)
+        Controls.Add(txtPathOfInstaller)
+        FormBorderStyle = FormBorderStyle.Fixed3D
+        Margin = New Padding(2)
+        MaximizeBox = False
+        Name = "Form1"
+        ShowIcon = False
+        Text = "Win32 Content Prep Tool GUI"
+        ResumeLayout(False)
+        PerformLayout()
     End Sub
 
     Friend WithEvents txtPathOfInstaller As TextBox
@@ -288,4 +317,5 @@ Partial Class Form1
     Friend WithEvents lblCopyrightNotice As Label
     Friend WithEvents chkCatalogFolder As CheckBox
     Friend WithEvents chkQuietMode As CheckBox
+    Friend WithEvents Label2 As Label
 End Class

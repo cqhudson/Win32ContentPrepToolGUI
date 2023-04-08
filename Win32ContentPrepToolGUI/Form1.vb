@@ -1,7 +1,11 @@
 ﻿'
-' © 2022 - Connor Hudson
+' Copyright 2022-2023 © CONNOR HUDSON
 '
-' Author: Connor Hudson
+' AUTHOR: Connor Hudson ---> My site: https://hudson.tel
+'
+'
+' DESCRIPTION: 
+'   This application is supposed to make packaging applications into *.intunewin files easier. It's effectively a GUI wrapper for Microsoft's official Win32 Content Prep Tool.
 '
 
 Imports System.Text
@@ -13,9 +17,7 @@ Public Class Form1
     Dim SetupFile As String
     Dim SetupFolder As String
     Dim OutputFolder As String
-    Dim PrepToolExe As String
-
-    Dim SetupFileName As String
+    Dim PrepToolExePath As String
     Dim CatalogFolder As String
 
 #Region " Buttons "
@@ -32,20 +34,14 @@ Public Class Form1
     Private Sub btnStartPackaging_Click(sender As Object, e As EventArgs) Handles btnStartPackaging.Click
 
         If CheckToEnablePackaging() Then
+
             Dim properties As New ProcessStartInfo
-
             Dim PowerShell As String = "powershell.exe"
-
-            Dim sb As New StringBuilder()
-            Dim sb2 As New StringBuilder()
             Dim Args As String
 
-            Dim PatchedSetupFilePath As String ' Use this to wrap the setup_file path in double quotations for PowerShell
-            PatchedSetupFilePath = sb2.Append(Chr(34)).Append(SetupFolder).Append("\").Append(SetupFileName).Append(Chr(34)).ToString()
-
-            Args = GenerateArguments(PatchedSetupFilePath)
-
+            Args = GenerateArguments()
             StartContentPrep(PowerShell, Args)
+
         End If
 
     End Sub
@@ -53,13 +49,13 @@ Public Class Form1
     Private Sub btnSelectInstallerFolder_Click(sender As Object, e As EventArgs) Handles btnSelectInstallerFolder.Click
 
         SelectFolder(fbdiagSelectSourceFolder, txtPathOfInstallerFolder)
-        SetupFolder = txtPathOfInstallerFolder.Text
+        SetupFolder = WrapFilePathsInSingleQuotes(txtPathOfInstallerFolder.Text)
 
     End Sub
     Private Sub btnSelectOutputFolder_Click(sender As Object, e As EventArgs) Handles btnSelectOutputFolder.Click
 
         SelectFolder(fbdiagSelectOutputFolder, txtOutputFolderPath)
-        OutputFolder = txtOutputFolderPath.Text
+        OutputFolder = WrapFilePathsInSingleQuotes(txtOutputFolderPath.Text)
 
     End Sub
     Private Sub btnSelectPrepToolExe_Click(sender As Object, e As EventArgs) Handles btnSelectPrepToolExe.Click
@@ -74,7 +70,7 @@ Public Class Form1
     Private Sub btnSelectCatalogFolder_Click(sender As Object, e As EventArgs) Handles btnSelectCatalogFolder.Click
 
         SelectFolder(fbdiagSelectCatalogFolder, txtCatalogFolder)
-        CatalogFolder = txtCatalogFolder.Text
+        CatalogFolder = WrapFilePathsInSingleQuotes(txtCatalogFolder.Text)
 
     End Sub
 
@@ -84,43 +80,33 @@ Public Class Form1
 
     Private Sub opnfilediagSelectInstaller_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectInstaller.FileOk
 
-        Dim sb As New StringBuilder()
-        Dim ReversedFilePath As String
-        Dim Index As Integer
-        Dim SingleQuote As Integer = 39
-
         SelectFile(opnfilediagSelectInstaller, txtPathOfInstaller)
-        SetupFile = txtPathOfInstaller.Text
-
-        ReversedFilePath = StrReverse(SetupFile)
-
-        ' This loop is so we can capture the filename of the executable we want to pack.
-        ' Unfortunately, if there are spaces in the filename, IntuneWinAppUtil.exe throws
-        ' some errors unless it is wrapped in quotes.
-
-        For Each character As Char In ReversedFilePath
-            Index += 1
-            If character = "\" Then
-                SetupFileName = ReversedFilePath.Substring(0, Index - 1)
-                SetupFileName = StrReverse(SetupFileName)
-
-                SetupFileName = sb.Append(Chr(SingleQuote)).Append(SetupFileName).Append(Chr(SingleQuote)).ToString() ' Add double quotation marks to the beginning and ending of filename
-
-                Exit For
-            End If
-        Next
+        SetupFile = WrapFilePathsInSingleQuotes(txtPathOfInstaller.Text)
 
     End Sub
     Private Sub opnfilediagSelectPrepToolExe_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectPrepToolExe.FileOk
 
         SelectFile(opnfilediagSelectPrepToolExe, txtPathOfPrepToolExe)
-        PrepToolExe = txtPathOfPrepToolExe.Text
+        PrepToolExePath = WrapFilePathsInSingleQuotes(txtPathOfPrepToolExe.Text)
 
     End Sub
 
 #End Region
 
 #Region " Sub Procedures and Functions "
+
+    ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe
+    Function WrapFilePathsInSingleQuotes(Path As String) As String
+
+        Dim folders As String() = Path.Split("\"c)
+        Dim QuotedFolders As String() = folders.Select(Function(folder) If(folder = folders.First(), folder, $"'{folder}'")).ToArray()
+        Dim QuotedPath As String = String.Join("\", QuotedFolders)
+        QuotedPath = """" & QuotedPath & """"
+
+        Return QuotedPath
+
+    End Function
+
     Sub SelectFolder(fbdiag As FolderBrowserDialog, txtbox As TextBox)
 
         If (fbdiag.ShowDialog() = DialogResult.OK) Then
@@ -137,7 +123,7 @@ Public Class Form1
 
     End Sub
 
-    Sub StartContentPrep(Executable As String, Args As String) ' prepExe is the IntuneWinAppUtil.exe filepath, I would like to directly call this instead of calling powershell later.
+    Sub StartContentPrep(Executable As String, Args As String)
 
         Dim sb As New StringBuilder()
         sb.Append("").Append(Args)
@@ -175,7 +161,7 @@ Public Class Form1
 
     End Sub
 
-    Function GenerateArguments(PatchedSetupFilePath As String) As String
+    Function GenerateArguments() As String
 
         Dim Args As String
         Dim ArgBuilder As New StringBuilder
@@ -189,9 +175,9 @@ Public Class Form1
 
         If chkCatalogFolder.Checked Then ' If true, then generate args including a catalog folder
 
-            ArgBuilder.Append(PrepToolExe).Append(Space)
+            ArgBuilder.Append(PrepToolExePath).Append(Space)
             ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
-            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(PatchedSetupFilePath)
+            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(SetupFile)
             ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
             ArgBuilder.Append(Space).Append(Param_CatalogFolder).Append(Space).Append(CatalogFolder)
 
@@ -202,9 +188,9 @@ Public Class Form1
 
         Else
 
-            ArgBuilder.Append(PrepToolExe).Append(Space)
+            ArgBuilder.Append(PrepToolExePath).Append(Space)
             ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
-            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(PatchedSetupFilePath)
+            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(SetupFile)
             ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
 
             ' Enable quiet mode if true
@@ -215,6 +201,7 @@ Public Class Form1
         End If
 
         Args = ArgBuilder.ToString()
+
         Return Args
 
     End Function
@@ -225,7 +212,7 @@ Public Class Form1
         Const MsgTitle As String = "Please fill in all values."
         Const MsgError As String = "One or more arguments was not specified, please make sure you fill in all values!"
 
-        If PrepToolExe = "" Then
+        If PrepToolExePath = "" Then
             Check1 = False
         Else
             Check1 = True
