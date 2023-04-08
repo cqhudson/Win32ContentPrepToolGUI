@@ -10,7 +10,6 @@
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.Devices
 Imports Microsoft.Win32
 
 Public Class Form1
