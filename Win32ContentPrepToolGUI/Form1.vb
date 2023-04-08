@@ -289,7 +289,7 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         '
         ' Super ugly way of checking if a regkey exists to autofill the location for IntuneWinAppUtil.exe
@@ -304,9 +304,9 @@ Public Class Form1
         Dim defaultPathToAppUtil As String = HomeDrive & "\IWAU\IntuneWinAppUtil.exe"
         Dim RegKey As String = "WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
 
-        If My.Computer.Registry.CurrentUser.OpenSubKey(RegKey) Is Nothing Then
-            My.Computer.Registry.CurrentUser.CreateSubKey(RegKey)
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\" & RegKey, "IntuneWinAppUtil_Location", defaultPathToAppUtil)
+        If Registry.CurrentUser.OpenSubKey(RegKey) Is Nothing Then
+            Registry.CurrentUser.CreateSubKey(RegKey)
+            Registry.SetValue("HKEY_CURRENT_USER\" & RegKey, "IntuneWinAppUtil_Location", defaultPathToAppUtil)
         End If
 
 
@@ -323,5 +323,14 @@ Public Class Form1
         End If
 
 
+    End Sub
+
+    Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click
+        Dim regKeyValue As String = Registry.GetValue("HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG", "IntuneWinAppUtil_Location", Nothing)
+        Dim defaultIntuneAppUtilPath As String = "Your current default path to IntuneWinAppUtil.exe is: " & vbCrLf & """" & regKeyValue & """" & vbCrLf & vbCrLf
+        Dim regKeyPath As String = "According to the registry key: " & vbCrLf & """" & "HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG" & """" & vbCrLf & vbCrLf
+        Dim information As String = "You can change this value at any time by using the Registry Editor (regedit.exe) and navigating to the registry key above. Change the value stored in " & """" & "IntuneWinAppUtil_Location" & """" & " to the path you stored your IntuneWinAppUtil.exe file."
+
+        MessageBox.Show(regKeyPath & defaultIntuneAppUtilPath & information, "Config Info")
     End Sub
 End Class
