@@ -8,7 +8,9 @@
 '   This application is supposed to make packaging applications into *.intunewin files easier. It's effectively a GUI wrapper for Microsoft's official Win32 Content Prep Tool.
 '
 
+Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Devices
 
 Public Class Form1
 
@@ -19,6 +21,8 @@ Public Class Form1
     Dim OutputFolder As String
     Dim PrepToolExePath As String
     Dim CatalogFolder As String
+
+
 
 #Region " Buttons "
 
@@ -94,6 +98,10 @@ Public Class Form1
 #End Region
 
 #Region " Sub Procedures and Functions "
+
+    Function GetCurrentDirectory() As String
+        Return AppContext.BaseDirectory
+    End Function
 
     ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe
     Function WrapFilePathsInSingleQuotes(Path As String) As String
@@ -280,4 +288,14 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        Dim RegKey As String = "WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+
+        If My.Computer.Registry.CurrentUser.OpenSubKey(RegKey) Is Nothing Then
+            My.Computer.Registry.CurrentUser.CreateSubKey(RegKey)
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\" & RegKey, "IntuneWinAppUtil_Location", HomeDrive & "\IWAU\IntuneWinAppUtil.exe")
+        End If
+
+    End Sub
 End Class
