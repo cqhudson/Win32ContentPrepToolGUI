@@ -11,6 +11,7 @@
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.Devices
+Imports Microsoft.Win32
 
 Public Class Form1
 
@@ -290,12 +291,37 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        '
+        ' Super ugly way of checking if a regkey exists to autofill the location for IntuneWinAppUtil.exe
+        '
+        ' The key "HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG" has a value called "IntuneWinAppUtil_Location"
+        ' Change the value to whatever filepath your IntuneWinAppUtil.exe is located at. 
+        '
+        ' When testing, I used the filepath "C:\Users\Connor\Desktop\Microsoft-Win32 Content-Prep-Tool-1.8.4\IntuneWinAppUtil.exe" as the value for "IntuneWinAppUtil_Location"
+        ' This seems to work perfectly.
+        '
+
+        Dim defaultPathToAppUtil As String = HomeDrive & "\IWAU\IntuneWinAppUtil.exe"
         Dim RegKey As String = "WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
 
         If My.Computer.Registry.CurrentUser.OpenSubKey(RegKey) Is Nothing Then
             My.Computer.Registry.CurrentUser.CreateSubKey(RegKey)
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\" & RegKey, "IntuneWinAppUtil_Location", HomeDrive & "\IWAU\IntuneWinAppUtil.exe")
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\" & RegKey, "IntuneWinAppUtil_Location", defaultPathToAppUtil)
         End If
+
+
+        Dim keyName As String = "HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+        Dim valueName As String = "IntuneWinAppUtil_Location"
+        Dim filePath As String = Registry.GetValue(keyName, valueName, Nothing)
+
+        If filePath IsNot Nothing Then
+            If File.Exists(filePath) Then
+                ' If the file specified at the regkey exists, autofill
+                txtPathOfPrepToolExe.Text = filePath
+                PrepToolExePath = WrapFilePathsInSingleQuotes(filePath)
+            End If
+        End If
+
 
     End Sub
 End Class
