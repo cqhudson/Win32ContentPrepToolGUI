@@ -47,6 +47,7 @@ Partial Class Form1
         chkCatalogFolder = New CheckBox()
         chkQuietMode = New CheckBox()
         Label2 = New Label()
+        btnInfo = New Button()
         SuspendLayout()
         ' 
         ' txtPathOfInstaller
@@ -251,18 +252,28 @@ Partial Class Form1
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(8, 341)
+        Label2.Location = New Point(9, 352)
         Label2.Name = "Label2"
         Label2.Size = New Size(365, 15)
         Label2.TabIndex = 27
         Label2.Text = "Copyright 2022-2023 © CONNOR HUDSON   ---   https://hudson.tel"
+        ' 
+        ' btnInfo
+        ' 
+        btnInfo.Location = New Point(432, 344)
+        btnInfo.Name = "btnInfo"
+        btnInfo.Size = New Size(48, 23)
+        btnInfo.TabIndex = 28
+        btnInfo.Text = "INFO"
+        btnInfo.UseVisualStyleBackColor = True
         ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImageLayout = ImageLayout.Stretch
-        ClientSize = New Size(489, 365)
+        ClientSize = New Size(489, 376)
+        Controls.Add(btnInfo)
         Controls.Add(Label2)
         Controls.Add(chkQuietMode)
         Controls.Add(chkCatalogFolder)
@@ -318,4 +329,5 @@ Partial Class Form1
     Friend WithEvents chkCatalogFolder As CheckBox
     Friend WithEvents chkQuietMode As CheckBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents btnInfo As Button
 End Class
