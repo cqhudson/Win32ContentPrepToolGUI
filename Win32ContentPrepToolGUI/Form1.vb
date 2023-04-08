@@ -8,14 +8,23 @@
 '   This application is supposed to make packaging applications into *.intunewin files easier. It's effectively a GUI wrapper for Microsoft's official Win32 Content Prep Tool.
 '
 
+Imports System.DirectoryServices.ActiveDirectory
+Imports System.Drawing.Drawing2D
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Security.Policy
 Imports System.Text
+Imports System.Windows.Forms.Design
 Imports Microsoft.Win32
+Imports Microsoft.Win32.SafeHandles
 
 Public Class Form1
 
     Dim HomeDrive As String = Environment.GetEnvironmentVariable("HOMEDRIVE")
-
+    Dim RegKey As String = "HKEY_CURRENT_USER\SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+    Dim RegKeyWithoutHive As String = "SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+    Dim RegKeyValueName As String = "IntuneWinAppUtil_Location"
+    Dim IWAU As String = "IntuneWinAppUtil.exe"
     Dim SetupFile As String
     Dim SetupFolder As String
     Dim OutputFolder As String
@@ -293,42 +302,57 @@ Public Class Form1
         '
         ' Super ugly way of checking if a regkey exists to autofill the location for IntuneWinAppUtil.exe
         '
-        ' The key "HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG" has a value called "IntuneWinAppUtil_Location"
-        ' Change the value to whatever filepath your IntuneWinAppUtil.exe is located at. 
-        '
         ' When testing, I used the filepath "C:\Users\Connor\Desktop\Microsoft-Win32 Content-Prep-Tool-1.8.4\IntuneWinAppUtil.exe" as the value for "IntuneWinAppUtil_Location"
         ' This seems to work perfectly.
         '
+        Dim iwauPath As String = GetCurrentDirectory() & IWAU
+        Dim defaultPathToAppUtil As String = HomeDrive & "\IWAU\" & IWAU
 
-        Dim defaultPathToAppUtil As String = HomeDrive & "\IWAU\IntuneWinAppUtil.exe"
-        Dim RegKey As String = "WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+        If File.Exists(iwauPath) Then
+            txtPathOfPrepToolExe.Text = GetCurrentDirectory() & IWAU
+            PrepToolExePath = WrapFilePathsInSingleQuotes(txtPathOfPrepToolExe.Text)
 
-        If Registry.CurrentUser.OpenSubKey(RegKey) Is Nothing Then
-            Registry.CurrentUser.CreateSubKey(RegKey)
-            Registry.SetValue("HKEY_CURRENT_USER\" & RegKey, "IntuneWinAppUtil_Location", defaultPathToAppUtil)
+
+        Else
+
+            ' If IWAU is not in the current working directory, then fallback to registry key location
+
+            If Registry.CurrentUser.OpenSubKey(RegKeyWithoutHive) Is Nothing Then
+                Registry.CurrentUser.CreateSubKey(RegKeyWithoutHive)
+                Registry.SetValue(RegKey, RegKeyValueName, defaultPathToAppUtil)
+            End If
+
+            Dim filePath As String = Registry.GetValue(RegKey, RegKeyValueName, Nothing)
+
+            If filePath IsNot Nothing Then
+
+                ' If IWAU is not at the specified location in the registry, then nothing will happen,
+                ' you will have to fallback to manually choosing IWAU through diags
+
+                If File.Exists(filePath) Then
+                    ' If the file specified at the regkey exists, autofill
+                    txtPathOfPrepToolExe.Text = filePath
+                    PrepToolExePath = WrapFilePathsInSingleQuotes(filePath)
+                End If
+            End If
+
+
         End If
 
-
-        Dim keyName As String = "HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
-        Dim valueName As String = "IntuneWinAppUtil_Location"
-        Dim filePath As String = Registry.GetValue(keyName, valueName, Nothing)
-
-        If filePath IsNot Nothing Then
-            If File.Exists(filePath) Then
-                ' If the file specified at the regkey exists, autofill
-                txtPathOfPrepToolExe.Text = filePath
-                PrepToolExePath = WrapFilePathsInSingleQuotes(filePath)
-            End If
+        ' If IWAU is found in the current working directory, then just make sure the regkey is created for later.
+        If Registry.CurrentUser.OpenSubKey(RegKeyWithoutHive) Is Nothing Then
+            Registry.CurrentUser.CreateSubKey(RegKeyWithoutHive)
+            Registry.SetValue(RegKey, RegKeyValueName, defaultPathToAppUtil)
         End If
 
 
     End Sub
 
     Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click
-        Dim regKeyValue As String = Registry.GetValue("HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG", "IntuneWinAppUtil_Location", Nothing)
-        Dim defaultIntuneAppUtilPath As String = "Your current default path to IntuneWinAppUtil.exe is: " & vbCrLf & """" & regKeyValue & """" & vbCrLf & vbCrLf
-        Dim regKeyPath As String = "According to the registry key: " & vbCrLf & """" & "HKEY_CURRENT_USER\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG" & """" & vbCrLf & vbCrLf
-        Dim information As String = "You can change this value at any time by using the Registry Editor (regedit.exe) and navigating to the registry key above. Change the value stored in " & """" & "IntuneWinAppUtil_Location" & """" & " to the path you stored your IntuneWinAppUtil.exe file."
+        Dim regKeyValue As String = Registry.GetValue(RegKey, RegKeyValueName, Nothing)
+        Dim defaultIntuneAppUtilPath As String = "Your current default path to " & IWAU & " is: " & vbCrLf & """" & regKeyValue & """" & vbCrLf & vbCrLf
+        Dim regKeyPath As String = "According to the registry key: " & vbCrLf & """" & RegKey & """" & vbCrLf & vbCrLf
+        Dim information As String = "You can change this value at any time by using the Registry Editor (regedit.exe) and navigating to the registry key above. Change the value stored in " & """" & RegKeyValueName & """" & " to the path you stored your " & IWAU & " file. You can also store the " & IWAU & " file in the same directory as this application."
 
         MessageBox.Show(regKeyPath & defaultIntuneAppUtilPath & information, "Config Info")
     End Sub
