@@ -1,3 +1,5 @@
+https://www.buymeacoffee.com/cqhudson <-- donations if you feel like the project has made you life a little easier.
+
 # Win32ContentPrepToolGUI
 
 `Win32ContentPrepToolGUI` is an open source wrapper for the [Win32 Content Prep Tool](https://github.com/Microsoft/Microsoft-Win32-Content-Prep-Tool) by Microsoft. I got tired of having to manually type in file paths without autocompletion, so now we can use a nice GUI to select file paths.
