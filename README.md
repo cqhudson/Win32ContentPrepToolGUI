@@ -25,3 +25,14 @@ Download the official [Win32 Content Prep Tool (IntuneWinAppUtil.exe)](https://g
 8. Celebrate, because you can now upload your `.intunewin` file to Intune, and you didn't have to type in those long file paths to do it.
 
 ![Win32ContentPrepToolGUI_1](https://user-images.githubusercontent.com/36829070/230744715-4b676d32-0818-4d84-b05a-c3d820c60da1.jpg)
+
+### **Autofill `IntuneWinAppUtil.exe`**
+
+To tell this app where IntuneWinAppUtil.exe is stored, you can use the registry editor. Go to the following key: `HKEY_CURRENT_USER\SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG`.
+
+Inside that key is a value called `IntuneWinAppUtil_Location`. The default value is set to `C:\IWAU\IntuneWinAppUtil.exe`. Change this to whatever value you want. If the app finds the util tool at that location, it will autofill the value every time you run the GUI.
+
+Here are some valid example values for `IntuneWinAppUtil_Location`:
+1. `C:\Intune Utils\Microsoft\IntuneWinAppUtil.exe`
+2. `C:\Users\username\Documents\IntuneWinAppUtil.exe`
+3. `C:\Tools\Intune Tools\Microsoft Win32 Content Prep Tool\IntuneWinAppUtil.exe`
