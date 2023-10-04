@@ -9,15 +9,9 @@
 '   This application is supposed to make packaging applications into *.intunewin files easier. It's effectively a GUI wrapper for Microsoft's official Win32 Content Prep Tool.
 '
 
-Imports System.DirectoryServices.ActiveDirectory
-Imports System.Drawing.Drawing2D
 Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports System.Security.Policy
 Imports System.Text
-Imports System.Windows.Forms.Design
 Imports Microsoft.Win32
-Imports Microsoft.Win32.SafeHandles
 
 Public Class Form1
 
@@ -31,7 +25,6 @@ Public Class Form1
     Dim OutputFolder As String
     Dim PrepToolExePath As String
     Dim CatalogFolder As String
-
 
 
 #Region " Buttons "
