@@ -1,22 +1,17 @@
 ﻿'
 ' Copyright 2022-2023 © CONNOR HUDSON
 '
-' AUTHOR: Connor Hudson ---> My site: https://hudson.tel
+' AUTHOR: Connor Hudson ---> My sites: https://hudson.tel
+'                                      https://connorhudson.com 
 '
 '
 ' DESCRIPTION: 
 '   This application is supposed to make packaging applications into *.intunewin files easier. It's effectively a GUI wrapper for Microsoft's official Win32 Content Prep Tool.
 '
 
-Imports System.DirectoryServices.ActiveDirectory
-Imports System.Drawing.Drawing2D
 Imports System.IO
-Imports System.Runtime.CompilerServices
-Imports System.Security.Policy
 Imports System.Text
-Imports System.Windows.Forms.Design
 Imports Microsoft.Win32
-Imports Microsoft.Win32.SafeHandles
 
 Public Class Form1
 
@@ -30,7 +25,6 @@ Public Class Form1
     Dim OutputFolder As String
     Dim PrepToolExePath As String
     Dim CatalogFolder As String
-
 
 
 #Region " Buttons "
@@ -47,14 +41,11 @@ Public Class Form1
     Private Sub btnStartPackaging_Click(sender As Object, e As EventArgs) Handles btnStartPackaging.Click
 
         If CheckToEnablePackaging() Then
-
-            Dim properties As New ProcessStartInfo
             Dim PowerShell As String = "powershell.exe"
             Dim Args As String
 
             Args = GenerateArguments()
             StartContentPrep(PowerShell, Args)
-
         End If
 
     End Sub
@@ -112,12 +103,30 @@ Public Class Form1
         Return AppContext.BaseDirectory
     End Function
 
-    ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe
     Function WrapFilePathsInSingleQuotes(Path As String) As String
 
+        ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe \
+        '
+        ' Each "folder" will be wrapped in single quotes.
+        '
+        ' For instance, consider the path:
+        '               [ C:\Dir 1\Dir 2\Dir 3 ]
+        ' The following code will return:
+        '               [ C:\'Dir 1'\'Dir 2'\'Dir 3' ]
+
+
+        ' Create array of substrings (each folder) using the backslash char as a delimiter
         Dim folders As String() = Path.Split("\"c)
+
+        ' This creates a new array of strings by looping through the 'folders' array.
+        ' If its the first 'folder' ( "C:" ), then we do nothing, no need to wrap the C: folder.
+        ' Every other 'folder' in the 'folders' array is wrapped in single quotes.
         Dim QuotedFolders As String() = folders.Select(Function(folder) If(folder = folders.First(), folder, $"'{folder}'")).ToArray()
+
+        ' Create the newly wrapped path by joining each substring together with a backslash.
         Dim QuotedPath As String = String.Join("\", QuotedFolders)
+
+        ' Wrap the entire quoted path in double quote chars before returning
         QuotedPath = """" & QuotedPath & """"
 
         Return QuotedPath
@@ -141,10 +150,6 @@ Public Class Form1
     End Sub
 
     Sub StartContentPrep(Executable As String, Args As String)
-
-        Dim sb As New StringBuilder()
-        sb.Append("").Append(Args)
-        Args = sb.ToString()
 
         Try
             Dim proc As New Process
@@ -225,60 +230,34 @@ Public Class Form1
 
     Function CheckToEnablePackaging() As Boolean
 
-        Dim Check1, Check2, Check3, Check4, Check5 As Boolean
         Const MsgTitle As String = "Please fill in all values."
         Const MsgError As String = "One or more arguments was not specified, please make sure you fill in all values!"
 
-        If PrepToolExePath = "" Then
-            Check1 = False
-        Else
-            Check1 = True
-        End If
+        ' Check if any paths are populated
+        Dim prepToolPathIsPopulated As Boolean = (PrepToolExePath <> "")
+        Dim setupFileIsPopulated As Boolean = (SetupFile <> "")
+        Dim setupFolderIsPopulated As Boolean = (SetupFolder <> "")
+        Dim outputFolderIsPopulated As Boolean = (OutputFolder <> "")
 
-        If SetupFile = "" Then
-            Check2 = False
-        Else
-            Check2 = True
-        End If
-
-        If SetupFolder = "" Then
-            Check3 = False
-        Else
-            Check3 = True
-        End If
-
-        If OutputFolder = "" Then
-            Check4 = False
-        Else
-            Check4 = True
-        End If
-
-
+        ' Separate path check if using a catalog folder
         If chkCatalogFolder.Checked Then
+            Dim catalogFolderIsPopulated As Boolean = (CatalogFolder <> "")
 
-            If CatalogFolder = "" Then
-                Check5 = False
-            Else
-                Check5 = True
-            End If
-
-            If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Or Check5 = False Then
-                MessageBox.Show(MsgError, MsgTitle)
-                Return False
-            Else
+            If prepToolPathIsPopulated And setupFileIsPopulated And setupFolderIsPopulated And outputFolderIsPopulated And catalogFolderIsPopulated Then
                 Return True
             End If
 
-        Else
-
-            If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Then
-                MessageBox.Show(MsgError, MsgTitle)
-                Return False
-            Else
-                Return True
-            End If
-
+            MessageBox.Show(MsgError, MsgTitle)
+            Return False
         End If
+
+        ' If not using catalog folder, then only check the first 4 options
+        If prepToolPathIsPopulated And setupFileIsPopulated And setupFolderIsPopulated And outputFolderIsPopulated Then
+            Return True
+        End If
+
+        MessageBox.Show(MsgError, MsgTitle)
+        Return False
 
 
     End Function
