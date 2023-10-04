@@ -244,60 +244,67 @@ Public Class Form1
 
     Function CheckToEnablePackaging() As Boolean
 
-        Dim Check1, Check2, Check3, Check4, Check5 As Boolean
+        Dim checkPrepToolExePath, checkSetupFile, checkSetupFolder, checkOutputFolder, checkCatalogFolder As Boolean
         Const MsgTitle As String = "Please fill in all values."
         Const MsgError As String = "One or more arguments was not specified, please make sure you fill in all values!"
 
         If PrepToolExePath = "" Then
-            Check1 = False
+            checkPrepToolExePath = False
         Else
-            Check1 = True
+            checkPrepToolExePath = True
         End If
 
         If SetupFile = "" Then
-            Check2 = False
+            checkSetupFile = False
         Else
-            Check2 = True
+            checkSetupFile = True
         End If
 
         If SetupFolder = "" Then
-            Check3 = False
+            checkSetupFolder = False
         Else
-            Check3 = True
+            checkSetupFolder = True
         End If
 
         If OutputFolder = "" Then
-            Check4 = False
+            checkOutputFolder = False
         Else
-            Check4 = True
+            checkOutputFolder = True
         End If
 
-
+        ' Separate check if using a catalog folder
         If chkCatalogFolder.Checked Then
-
             If CatalogFolder = "" Then
-                Check5 = False
+                checkCatalogFolder = False
             Else
-                Check5 = True
+                checkCatalogFolder = True
             End If
 
-            If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Or Check5 = False Then
+            If checkPrepToolExePath = False Or
+                checkSetupFile = False Or
+                checkSetupFolder = False Or
+                checkOutputFolder = False Or
+                checkCatalogFolder = False Then
+
                 MessageBox.Show(MsgError, MsgTitle)
                 Return False
             Else
                 Return True
             End If
-
-        Else
-
-            If Check1 = False Or Check2 = False Or Check3 = False Or Check4 = False Then
-                MessageBox.Show(MsgError, MsgTitle)
-                Return False
-            Else
-                Return True
-            End If
-
         End If
+
+        ' If not using catalog folder, do standard check
+        If checkPrepToolExePath = False _
+            Or checkSetupFile = False Or
+            checkSetupFolder = False Or
+            checkOutputFolder = False Then
+
+            MessageBox.Show(MsgError, MsgTitle)
+            Return False
+        Else
+            Return True
+        End If
+
 
 
     End Function
