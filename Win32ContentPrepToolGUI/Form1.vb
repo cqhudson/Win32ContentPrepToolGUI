@@ -158,9 +158,12 @@ Public Class Form1
 
     Sub StartContentPrep(Executable As String, Args As String)
 
-        Dim sb As New StringBuilder()
-        sb.Append("").Append(Args)
-        Args = sb.ToString()
+        ' TODO: Unnecessary Conversions??? Potentially delete these in future, commented out for now.
+        '       Will be testing this to see if necessary, but the 3 lines are highly unlikely to be needed.
+        '
+        ' Dim sb As New StringBuilder()
+        ' sb.Append("").Append(Args)
+        ' Args = sb.ToString()
 
         Try
             Dim proc As New Process
