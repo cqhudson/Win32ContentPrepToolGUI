@@ -48,14 +48,11 @@ Public Class Form1
     Private Sub btnStartPackaging_Click(sender As Object, e As EventArgs) Handles btnStartPackaging.Click
 
         If CheckToEnablePackaging() Then
-
-            Dim properties As New ProcessStartInfo
             Dim PowerShell As String = "powershell.exe"
             Dim Args As String
 
             Args = GenerateArguments()
             StartContentPrep(PowerShell, Args)
-
         End If
 
     End Sub
@@ -113,7 +110,7 @@ Public Class Form1
         Return AppContext.BaseDirectory
     End Function
 
-    ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe
+    ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe 
     Function WrapFilePathsInSingleQuotes(Path As String) As String
 
         Dim folders As String() = Path.Split("\"c)
