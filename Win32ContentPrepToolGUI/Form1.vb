@@ -244,67 +244,34 @@ Public Class Form1
 
     Function CheckToEnablePackaging() As Boolean
 
-        Dim checkPrepToolExePath, checkSetupFile, checkSetupFolder, checkOutputFolder, checkCatalogFolder As Boolean
         Const MsgTitle As String = "Please fill in all values."
         Const MsgError As String = "One or more arguments was not specified, please make sure you fill in all values!"
 
-        If PrepToolExePath = "" Then
-            checkPrepToolExePath = False
-        Else
-            checkPrepToolExePath = True
-        End If
+        ' Check if any paths are populated
+        Dim prepToolPathIsPopulated As Boolean = (PrepToolExePath <> "")
+        Dim setupFileIsPopulated As Boolean = (SetupFile <> "")
+        Dim setupFolderIsPopulated As Boolean = (SetupFolder <> "")
+        Dim outputFolderIsPopulated As Boolean = (OutputFolder <> "")
 
-        If SetupFile = "" Then
-            checkSetupFile = False
-        Else
-            checkSetupFile = True
-        End If
-
-        If SetupFolder = "" Then
-            checkSetupFolder = False
-        Else
-            checkSetupFolder = True
-        End If
-
-        If OutputFolder = "" Then
-            checkOutputFolder = False
-        Else
-            checkOutputFolder = True
-        End If
-
-        ' Separate check if using a catalog folder
+        ' Separate path check if using a catalog folder
         If chkCatalogFolder.Checked Then
-            If CatalogFolder = "" Then
-                checkCatalogFolder = False
-            Else
-                checkCatalogFolder = True
-            End If
+            Dim catalogFolderIsPopulated As Boolean = (CatalogFolder <> "")
 
-            If checkPrepToolExePath = False Or
-                checkSetupFile = False Or
-                checkSetupFolder = False Or
-                checkOutputFolder = False Or
-                checkCatalogFolder = False Then
-
-                MessageBox.Show(MsgError, MsgTitle)
-                Return False
-            Else
+            If prepToolPathIsPopulated And setupFileIsPopulated And setupFolderIsPopulated And outputFolderIsPopulated And catalogFolderIsPopulated Then
                 Return True
             End If
-        End If
-
-        ' If not using catalog folder, do standard check
-        If checkPrepToolExePath = False _
-            Or checkSetupFile = False Or
-            checkSetupFolder = False Or
-            checkOutputFolder = False Then
 
             MessageBox.Show(MsgError, MsgTitle)
             Return False
-        Else
+        End If
+
+        ' If not using catalog folder, then only check the first 4 options
+        If prepToolPathIsPopulated And setupFileIsPopulated And setupFolderIsPopulated And outputFolderIsPopulated Then
             Return True
         End If
 
+        MessageBox.Show(MsgError, MsgTitle)
+        Return False
 
 
     End Function
