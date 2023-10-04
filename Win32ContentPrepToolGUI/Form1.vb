@@ -1,7 +1,8 @@
 ﻿'
 ' Copyright 2022-2023 © CONNOR HUDSON
 '
-' AUTHOR: Connor Hudson ---> My site: https://hudson.tel
+' AUTHOR: Connor Hudson ---> My sites: https://hudson.tel
+'                                      https://connorhudson.com 
 '
 '
 ' DESCRIPTION: 
