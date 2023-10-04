@@ -110,12 +110,30 @@ Public Class Form1
         Return AppContext.BaseDirectory
     End Function
 
-    ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe 
     Function WrapFilePathsInSingleQuotes(Path As String) As String
 
+        ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe \
+        '
+        ' Each "folder" will be wrapped in single quotes.
+        '
+        ' For instance, consider the path:
+        '               [ C:\Dir 1\Dir 2\Dir 3 ]
+        ' The following code will return:
+        '               [ C:\'Dir 1'\'Dir 2'\'Dir 3' ]
+
+
+        ' Create array of substrings (each folder) using the backslash char as a delimiter
         Dim folders As String() = Path.Split("\"c)
+
+        ' This creates a new array of strings by looping through the 'folders' array.
+        ' If its the first 'folder' ( "C:" ), then we do nothing, no need to wrap the C: folder.
+        ' Every other 'folder' in the 'folders' array is wrapped in single quotes.
         Dim QuotedFolders As String() = folders.Select(Function(folder) If(folder = folders.First(), folder, $"'{folder}'")).ToArray()
+
+        ' Create the newly wrapped path by joining each substring together with a backslash.
         Dim QuotedPath As String = String.Join("\", QuotedFolders)
+
+        ' Wrap the entire quoted path in double quote chars before returning
         QuotedPath = """" & QuotedPath & """"
 
         Return QuotedPath
