@@ -162,7 +162,6 @@ Public Class Form1
 
     Function GenerateArguments() As String
 
-        Dim args As String
         Dim argBuilder As New StringBuilder
 
         Dim paramSetupFolder As String = "-c"
@@ -188,8 +187,7 @@ Public Class Form1
             argBuilder.Append(space).Append(paramQuietMode)
         End If
 
-        args = argBuilder.ToString()
-        Return args
+        Return argBuilder.ToString()
 
     End Function
 
