@@ -266,9 +266,11 @@ Public Class Form1
 
     Private Sub chkCatalogFolder_CheckedChanged(sender As Object, e As EventArgs) Handles chkCatalogFolder.CheckedChanged
 
+        ' If checked, enable the catalog folder options
         btnSelectCatalogFolder.Enabled = chkCatalogFolder.Checked
         txtCatalogFolder.Enabled = chkCatalogFolder.Checked
 
+        ' If not checked, grey out and clear the catalog folder options
         If Not chkCatalogFolder.Checked Then
             CatalogFolder = ""
             txtCatalogFolder.Text = ""
