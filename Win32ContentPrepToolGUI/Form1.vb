@@ -133,8 +133,7 @@ Public Class Form1
 
     Sub SelectFile(openFileDiag As OpenFileDialog, txtBox As TextBox)
 
-        Dim stream As System.IO.Stream
-        stream = openFileDiag.OpenFile()
+        openFileDiag.OpenFile()
         txtBox.Text = openFileDiag.FileName.ToString()
 
     End Sub
