@@ -16,19 +16,19 @@ Imports Microsoft.Win32
 Public Class Form1
 
     Dim HomeDrive As String = Environment.GetEnvironmentVariable("HOMEDRIVE")
-    Dim RegKey As String = "HKEY_CURRENT_USER\SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
-    Dim RegKeyWithoutHive As String = "SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
-    Dim RegKeyValueName As String = "IntuneWinAppUtil_Location"
-    Dim IWAU As String = "IntuneWinAppUtil.exe"
+
+    Const RegKey As String = "HKEY_CURRENT_USER\SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+    Const RegKeyWithoutHive As String = "SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+    Const RegKeyValueName As String = "IntuneWinAppUtil_Location"
+    Const IWAU As String = "IntuneWinAppUtil.exe"
+
     Dim SetupFile As String
     Dim SetupFolder As String
     Dim OutputFolder As String
     Dim PrepToolExePath As String
     Dim CatalogFolder As String
 
-
 #Region " Buttons "
-
     Private Sub btnSelectInstaller_Click(sender As Object, e As EventArgs) Handles btnSelectInstaller.Click
 
         Dim ofd As OpenFileDialog = opnfilediagSelectInstaller
@@ -49,7 +49,6 @@ Public Class Form1
         End If
 
     End Sub
-
     Private Sub btnSelectInstallerFolder_Click(sender As Object, e As EventArgs) Handles btnSelectInstallerFolder.Click
 
         SelectFolder(fbdiagSelectSourceFolder, txtPathOfInstallerFolder)
@@ -77,11 +76,9 @@ Public Class Form1
         CatalogFolder = WrapFilePathsInSingleQuotes(txtCatalogFolder.Text)
 
     End Sub
-
 #End Region
 
 #Region " Open File Dialogs "
-
     Private Sub opnfilediagSelectInstaller_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectInstaller.FileOk
 
         SelectFile(opnfilediagSelectInstaller, txtPathOfInstaller)
@@ -94,15 +91,12 @@ Public Class Form1
         PrepToolExePath = WrapFilePathsInSingleQuotes(txtPathOfPrepToolExe.Text)
 
     End Sub
-
 #End Region
 
 #Region " Sub Procedures and Functions "
-
     Function GetCurrentDirectory() As String
         Return AppContext.BaseDirectory
     End Function
-
     Function WrapFilePathsInSingleQuotes(Path As String) As String
 
         ' Create array of substrings (each folder) using the backslash char as a delimiter
@@ -122,7 +116,6 @@ Public Class Form1
         Return QuotedPath
 
     End Function
-
     Sub SelectFolder(fbdiag As FolderBrowserDialog, txtbox As TextBox)
 
         If (fbdiag.ShowDialog() = DialogResult.OK) Then
@@ -130,14 +123,12 @@ Public Class Form1
         End If
 
     End Sub
-
     Sub SelectFile(openFileDiag As OpenFileDialog, txtBox As TextBox)
 
         openFileDiag.OpenFile()
         txtBox.Text = openFileDiag.FileName.ToString()
 
     End Sub
-
     Sub StartContentPrep(Executable As String, Args As String)
 
         Try
@@ -242,53 +233,42 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        '
-        ' Super ugly way of checking if a regkey exists to autofill the location for IntuneWinAppUtil.exe
-        '
-        ' When testing, I used the filepath "C:\Users\Connor\Desktop\Microsoft-Win32 Content-Prep-Tool-1.8.4\IntuneWinAppUtil.exe" as the value for "IntuneWinAppUtil_Location"
-        ' This seems to work perfectly.
-        '
-        Dim iwauPath As String = GetCurrentDirectory() & IWAU
+        Dim currentDirectoryIWAU As String = GetCurrentDirectory() & IWAU
         Dim defaultPathToAppUtil As String = HomeDrive & "\IWAU\" & IWAU
 
-        If File.Exists(iwauPath) Then
-            txtPathOfPrepToolExe.Text = GetCurrentDirectory() & IWAU
-            PrepToolExePath = WrapFilePathsInSingleQuotes(txtPathOfPrepToolExe.Text)
-
-
-        Else
-
-            ' If IWAU is not in the current working directory, then fallback to registry key location
-
-            If Registry.CurrentUser.OpenSubKey(RegKeyWithoutHive) Is Nothing Then
-                Registry.CurrentUser.CreateSubKey(RegKeyWithoutHive)
-                Registry.SetValue(RegKey, RegKeyValueName, defaultPathToAppUtil)
-            End If
-
-            Dim filePath As String = Registry.GetValue(RegKey, RegKeyValueName, Nothing)
-
-            If filePath IsNot Nothing Then
-
-                ' If IWAU is not at the specified location in the registry, then nothing will happen,
-                ' you will have to fallback to manually choosing IWAU through diags
-
-                If File.Exists(filePath) Then
-                    ' If the file specified at the regkey exists, autofill
-                    txtPathOfPrepToolExe.Text = filePath
-                    PrepToolExePath = WrapFilePathsInSingleQuotes(filePath)
-                End If
-            End If
-
-
-        End If
-
-        ' If IWAU is found in the current working directory, then just make sure the regkey is created for later.
+        ' If the regkey for this app does not exist, create it
         If Registry.CurrentUser.OpenSubKey(RegKeyWithoutHive) Is Nothing Then
             Registry.CurrentUser.CreateSubKey(RegKeyWithoutHive)
             Registry.SetValue(RegKey, RegKeyValueName, defaultPathToAppUtil)
         End If
 
+        ' If the file specified at the regkey exists, autofill PrepToolExePath
 
+        ' Assumes the regkey value includes the executable in filepath
+        ' Example of a good reg value: [ C:\Some\File Path\IntuneWinAppUtil.exe ]
+        ' Example of a bad reg value:  [ C:\Some\File Path ] OR [ C:\Some\File Path\ ]
+        Dim filePath As String = Registry.GetValue(RegKey, RegKeyValueName, Nothing)
+        If filePath IsNot Nothing And File.Exists(filePath) Then
+            txtPathOfPrepToolExe.Text = filePath
+            PrepToolExePath = WrapFilePathsInSingleQuotes(filePath)
+            Exit Sub
+        End If
+
+        ' If the file at regkey does not exist, then we check the default path next
+        If File.Exists(defaultPathToAppUtil) Then
+            txtPathOfPrepToolExe.Text = defaultPathToAppUtil
+            PrepToolExePath = WrapFilePathsInSingleQuotes(defaultPathToAppUtil)
+            Exit Sub
+        End If
+
+        ' If the file at the default path does not exist, then we check the current working directory
+        If File.Exists(currentDirectoryIWAU) Then
+            txtPathOfPrepToolExe.Text = currentDirectoryIWAU
+            PrepToolExePath = WrapFilePathsInSingleQuotes(currentDirectoryIWAU)
+            Exit Sub
+        End If
+
+        ' If no file is found, then we do not autofill the PrepToolExePath variable
     End Sub
 
     Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click
