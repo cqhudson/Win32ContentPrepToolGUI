@@ -172,35 +172,23 @@ Public Class Form1
         Dim paramQuietMode As String = "-q"
         Dim space As String = " "
 
-        If chkCatalogFolder.Checked Then ' If true, then generate args including a catalog folder
+        ' Add standard args (first 4 args)
+        argBuilder.Append(PrepToolExePath).Append(space)
+        argBuilder.Append(paramSetupFolder).Append(space).Append(SetupFolder).Append(space)
+        argBuilder.Append(paramSetupFile).Append(space).Append(SetupFile).Append(space)
+        argBuilder.Append(paramOutputFolder).Append(space).Append(OutputFolder)
 
-            argBuilder.Append(PrepToolExePath).Append(space)
-            argBuilder.Append(paramSetupFolder).Append(space).Append(SetupFolder)
-            argBuilder.Append(space).Append(paramSetupFile).Append(space).Append(SetupFile)
-            argBuilder.Append(space).Append(paramOutputFolder).Append(space).Append(OutputFolder)
+        ' Add catalog folder option
+        If chkCatalogFolder.Checked Then
             argBuilder.Append(space).Append(paramCatalogFolder).Append(space).Append(CatalogFolder)
+        End If
 
-            ' Enable quiet mode if true
-            If chkQuietMode.Checked Then
-                argBuilder.Append(space).Append(paramQuietMode).ToString()
-            End If
-
-        Else
-
-            argBuilder.Append(PrepToolExePath).Append(space)
-            argBuilder.Append(paramSetupFolder).Append(space).Append(SetupFolder)
-            argBuilder.Append(space).Append(paramSetupFile).Append(space).Append(SetupFile)
-            argBuilder.Append(space).Append(paramOutputFolder).Append(space).Append(OutputFolder)
-
-            ' Enable quiet mode if true
-            If chkQuietMode.Checked Then
-                argBuilder.Append(space).Append(paramQuietMode).ToString()
-            End If
-
+        ' Add quiet mode option
+        If chkQuietMode.Checked Then
+            argBuilder.Append(space).Append(paramQuietMode)
         End If
 
         args = argBuilder.ToString()
-
         Return args
 
     End Function
