@@ -170,19 +170,6 @@ Public Class Form1
 
     'End Sub
 
-    Sub CatalogFolderChoice(btn As Button, txtbox As TextBox, choice As Boolean)
-
-        txtbox.Text = ""
-        CatalogFolder = ""
-
-        If choice Then
-            btn.Enabled = choice
-        Else
-            btn.Enabled = choice
-        End If
-
-    End Sub
-
     Function GenerateArguments() As String
 
         Dim Args As String
