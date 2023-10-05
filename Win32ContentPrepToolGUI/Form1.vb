@@ -16,10 +16,12 @@ Imports Microsoft.Win32
 Public Class Form1
 
     Dim HomeDrive As String = Environment.GetEnvironmentVariable("HOMEDRIVE")
-    Dim RegKey As String = "HKEY_CURRENT_USER\SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
-    Dim RegKeyWithoutHive As String = "SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
-    Dim RegKeyValueName As String = "IntuneWinAppUtil_Location"
-    Dim IWAU As String = "IntuneWinAppUtil.exe"
+
+    Const RegKey As String = "HKEY_CURRENT_USER\SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+    Const RegKeyWithoutHive As String = "SOFTWARE\WIN32_CONTENT_PREP_TOOL_GUI_CONFIG"
+    Const RegKeyValueName As String = "IntuneWinAppUtil_Location"
+    Const IWAU As String = "IntuneWinAppUtil.exe"
+
     Dim SetupFile As String
     Dim SetupFolder As String
     Dim OutputFolder As String
