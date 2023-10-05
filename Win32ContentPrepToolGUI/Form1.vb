@@ -162,46 +162,46 @@ Public Class Form1
 
     Function GenerateArguments() As String
 
-        Dim Args As String
-        Dim ArgBuilder As New StringBuilder
+        Dim args As String
+        Dim argBuilder As New StringBuilder
 
-        Dim Param_SetupFolder As String = "-c"
-        Dim Param_SetupFile As String = "-s"
-        Dim Param_OutputFolder As String = "-o"
-        Dim Param_CatalogFolder As String = "-a"
-        Dim Param_QuietMode As String = "-q"
-        Dim Space As String = " "
+        Dim paramSetupFolder As String = "-c"
+        Dim paramSetupFile As String = "-s"
+        Dim paramOutputFolder As String = "-o"
+        Dim paramCatalogFolder As String = "-a"
+        Dim paramQuietMode As String = "-q"
+        Dim space As String = " "
 
         If chkCatalogFolder.Checked Then ' If true, then generate args including a catalog folder
 
-            ArgBuilder.Append(PrepToolExePath).Append(Space)
-            ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
-            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(SetupFile)
-            ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
-            ArgBuilder.Append(Space).Append(Param_CatalogFolder).Append(Space).Append(CatalogFolder)
+            argBuilder.Append(PrepToolExePath).Append(space)
+            argBuilder.Append(paramSetupFolder).Append(space).Append(SetupFolder)
+            argBuilder.Append(space).Append(paramSetupFile).Append(space).Append(SetupFile)
+            argBuilder.Append(space).Append(paramOutputFolder).Append(space).Append(OutputFolder)
+            argBuilder.Append(space).Append(paramCatalogFolder).Append(space).Append(CatalogFolder)
 
             ' Enable quiet mode if true
             If chkQuietMode.Checked Then
-                ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
+                argBuilder.Append(space).Append(paramQuietMode).ToString()
             End If
 
         Else
 
-            ArgBuilder.Append(PrepToolExePath).Append(Space)
-            ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
-            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(SetupFile)
-            ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
+            argBuilder.Append(PrepToolExePath).Append(space)
+            argBuilder.Append(paramSetupFolder).Append(space).Append(SetupFolder)
+            argBuilder.Append(space).Append(paramSetupFile).Append(space).Append(SetupFile)
+            argBuilder.Append(space).Append(paramOutputFolder).Append(space).Append(OutputFolder)
 
             ' Enable quiet mode if true
             If chkQuietMode.Checked Then
-                ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
+                argBuilder.Append(space).Append(paramQuietMode).ToString()
             End If
 
         End If
 
-        Args = ArgBuilder.ToString()
+        args = argBuilder.ToString()
 
-        Return Args
+        Return args
 
     End Function
 
