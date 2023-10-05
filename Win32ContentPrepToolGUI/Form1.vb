@@ -265,15 +265,15 @@ Public Class Form1
 #End Region
 
     Private Sub chkCatalogFolder_CheckedChanged(sender As Object, e As EventArgs) Handles chkCatalogFolder.CheckedChanged
-        If chkCatalogFolder.Checked Then
-            btnSelectCatalogFolder.Enabled = True
-            txtCatalogFolder.Enabled = True
-        Else
-            btnSelectCatalogFolder.Enabled = False
-            txtCatalogFolder.Enabled = False
+
+        btnSelectCatalogFolder.Enabled = chkCatalogFolder.Checked
+        txtCatalogFolder.Enabled = chkCatalogFolder.Checked
+
+        If Not chkCatalogFolder.Checked Then
             CatalogFolder = ""
             txtCatalogFolder.Text = ""
         End If
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
