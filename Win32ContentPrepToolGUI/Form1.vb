@@ -28,9 +28,7 @@ Public Class Form1
     Dim PrepToolExePath As String
     Dim CatalogFolder As String
 
-
 #Region " Buttons "
-
     Private Sub btnSelectInstaller_Click(sender As Object, e As EventArgs) Handles btnSelectInstaller.Click
 
         Dim ofd As OpenFileDialog = opnfilediagSelectInstaller
@@ -51,7 +49,6 @@ Public Class Form1
         End If
 
     End Sub
-
     Private Sub btnSelectInstallerFolder_Click(sender As Object, e As EventArgs) Handles btnSelectInstallerFolder.Click
 
         SelectFolder(fbdiagSelectSourceFolder, txtPathOfInstallerFolder)
@@ -79,11 +76,9 @@ Public Class Form1
         CatalogFolder = WrapFilePathsInSingleQuotes(txtCatalogFolder.Text)
 
     End Sub
-
 #End Region
 
 #Region " Open File Dialogs "
-
     Private Sub opnfilediagSelectInstaller_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles opnfilediagSelectInstaller.FileOk
 
         SelectFile(opnfilediagSelectInstaller, txtPathOfInstaller)
@@ -96,15 +91,12 @@ Public Class Form1
         PrepToolExePath = WrapFilePathsInSingleQuotes(txtPathOfPrepToolExe.Text)
 
     End Sub
-
 #End Region
 
 #Region " Sub Procedures and Functions "
-
     Function GetCurrentDirectory() As String
         Return AppContext.BaseDirectory
     End Function
-
     Function WrapFilePathsInSingleQuotes(Path As String) As String
 
         ' Create array of substrings (each folder) using the backslash char as a delimiter
@@ -124,7 +116,6 @@ Public Class Form1
         Return QuotedPath
 
     End Function
-
     Sub SelectFolder(fbdiag As FolderBrowserDialog, txtbox As TextBox)
 
         If (fbdiag.ShowDialog() = DialogResult.OK) Then
@@ -132,14 +123,12 @@ Public Class Form1
         End If
 
     End Sub
-
     Sub SelectFile(openFileDiag As OpenFileDialog, txtBox As TextBox)
 
         openFileDiag.OpenFile()
         txtBox.Text = openFileDiag.FileName.ToString()
 
     End Sub
-
     Sub StartContentPrep(Executable As String, Args As String)
 
         Try
