@@ -105,16 +105,6 @@ Public Class Form1
 
     Function WrapFilePathsInSingleQuotes(Path As String) As String
 
-        ' This is to allow file paths containing spaces to be used with IntuneWinAppUtil.exe \
-        '
-        ' Each "folder" will be wrapped in single quotes.
-        '
-        ' For instance, consider the path:
-        '               [ C:\Dir 1\Dir 2\Dir 3 ]
-        ' The following code will return:
-        '               [ C:\'Dir 1'\'Dir 2'\'Dir 3' ]
-
-
         ' Create array of substrings (each folder) using the backslash char as a delimiter
         Dim folders As String() = Path.Split("\"c)
 
@@ -143,8 +133,7 @@ Public Class Form1
 
     Sub SelectFile(openFileDiag As OpenFileDialog, txtBox As TextBox)
 
-        Dim stream As System.IO.Stream
-        stream = openFileDiag.OpenFile()
+        openFileDiag.OpenFile()
         txtBox.Text = openFileDiag.FileName.ToString()
 
     End Sub
@@ -170,61 +159,34 @@ Public Class Form1
 
     'End Sub
 
-    Sub CatalogFolderChoice(btn As Button, txtbox As TextBox, choice As Boolean)
-
-        txtbox.Text = ""
-        CatalogFolder = ""
-
-        If choice Then
-            btn.Enabled = choice
-        Else
-            btn.Enabled = choice
-        End If
-
-    End Sub
-
     Function GenerateArguments() As String
 
-        Dim Args As String
-        Dim ArgBuilder As New StringBuilder
+        Dim argBuilder As New StringBuilder
 
-        Dim Param_SetupFolder As String = "-c"
-        Dim Param_SetupFile As String = "-s"
-        Dim Param_OutputFolder As String = "-o"
-        Dim Param_CatalogFolder As String = "-a"
-        Dim Param_QuietMode As String = "-q"
-        Dim Space As String = " "
+        Dim paramSetupFolder As String = "-c"
+        Dim paramSetupFile As String = "-s"
+        Dim paramOutputFolder As String = "-o"
+        Dim paramCatalogFolder As String = "-a"
+        Dim paramQuietMode As String = "-q"
+        Dim space As String = " "
 
-        If chkCatalogFolder.Checked Then ' If true, then generate args including a catalog folder
+        ' Add standard args (first 4 args)
+        argBuilder.Append(PrepToolExePath).Append(space)
+        argBuilder.Append(paramSetupFolder).Append(space).Append(SetupFolder).Append(space)
+        argBuilder.Append(paramSetupFile).Append(space).Append(SetupFile).Append(space)
+        argBuilder.Append(paramOutputFolder).Append(space).Append(OutputFolder)
 
-            ArgBuilder.Append(PrepToolExePath).Append(Space)
-            ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
-            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(SetupFile)
-            ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
-            ArgBuilder.Append(Space).Append(Param_CatalogFolder).Append(Space).Append(CatalogFolder)
-
-            ' Enable quiet mode if true
-            If chkQuietMode.Checked Then
-                ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
-            End If
-
-        Else
-
-            ArgBuilder.Append(PrepToolExePath).Append(Space)
-            ArgBuilder.Append(Param_SetupFolder).Append(Space).Append(SetupFolder)
-            ArgBuilder.Append(Space).Append(Param_SetupFile).Append(Space).Append(SetupFile)
-            ArgBuilder.Append(Space).Append(Param_OutputFolder).Append(Space).Append(OutputFolder)
-
-            ' Enable quiet mode if true
-            If chkQuietMode.Checked Then
-                ArgBuilder.Append(Space).Append(Param_QuietMode).ToString()
-            End If
-
+        ' Add catalog folder option
+        If chkCatalogFolder.Checked Then
+            argBuilder.Append(space).Append(paramCatalogFolder).Append(space).Append(CatalogFolder)
         End If
 
-        Args = ArgBuilder.ToString()
+        ' Add quiet mode option
+        If chkQuietMode.Checked Then
+            argBuilder.Append(space).Append(paramQuietMode)
+        End If
 
-        Return Args
+        Return argBuilder.ToString()
 
     End Function
 
@@ -265,15 +227,17 @@ Public Class Form1
 #End Region
 
     Private Sub chkCatalogFolder_CheckedChanged(sender As Object, e As EventArgs) Handles chkCatalogFolder.CheckedChanged
-        If chkCatalogFolder.Checked Then
-            btnSelectCatalogFolder.Enabled = True
-            txtCatalogFolder.Enabled = True
-        Else
-            btnSelectCatalogFolder.Enabled = False
-            txtCatalogFolder.Enabled = False
+
+        ' If checked, enable the catalog folder options
+        btnSelectCatalogFolder.Enabled = chkCatalogFolder.Checked
+        txtCatalogFolder.Enabled = chkCatalogFolder.Checked
+
+        ' If not checked, grey out and clear the catalog folder options
+        If Not chkCatalogFolder.Checked Then
             CatalogFolder = ""
             txtCatalogFolder.Text = ""
         End If
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
